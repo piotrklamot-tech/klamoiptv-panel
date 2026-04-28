@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Klamot IPTV</title>
+
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Segoe UI", Arial, sans-serif;
+}
+
+html {
+  min-height: 100%;
+  background: #020617;
+}
+
+body {
+  min-height: 100vh;
+  background: url("./tlo.png") center / cover no-repeat fixed;
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  padding: 42px 0 42px 8%;
+  color: #fff;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.58);
+  z-index: -1;
+}
+
+.card {
+  width: 450px;
+  max-width: calc(100vw - 32px);
+  padding: 28px;
+  border-radius: 22px;
+  background: rgba(8, 16, 35, 0.86);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.55);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  backdrop-filter: blur(12px);
+}
+
+.logo {
+  font-size: 30px;
+  font-weight: 800;
+  letter-spacing: 0.5px;
+  margin-bottom: 4px;
+}
+
+.logo span {
+  color: #38bdf8;
+}
+
+.subtitle {
+  font-size: 14px;
+  color: #cbd5e1;
+  margin-bottom: 22px;
+  line-height: 1.45;
+}
+
+.section-title {
+  margin-top: 18px;
+  margin-bottom: 10px;
+  font-size: 15px;
+  font-weight: 800;
+  color: #93c5fd;
+  border-top: 1px solid rgba(255, 255, 255, 0.13);
+  padding-top: 16px;
+}
+
+label {
+  display: block;
+  font-size: 13px;
+  color: #dbeafe;
+  margin-bottom: 6px;
+  margin-top: 12px;
+}
+
+input,
+select {
+  width: 100%;
+  height: 44px;
+  border: 1px solid rgba(148, 163, 184, 0.42);
+  border-radius: 12px;
+  background: rgba(15, 23, 42, 0.92);
+  color: #fff;
+  padding: 0 13px;
+  outline: none;
+  font-size: 14px;
+}
+
+input:focus,
+select:focus {
+  border-color: #38bdf8;
+  box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.18);
+}
+
+input::placeholder {
+  color: #64748b;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.checkbox-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 14px;
+  color: #e2e8f0;
+  font-size: 14px;
+}
+
+.checkbox-row input {
+  width: 18px;
+  height: 18px;
+}
+
+button {
+  width: 100%;
+  height: 48px;
+  border: none;
+  border-radius: 14px;
+  margin-top: 18px;
+  background: linear-gradient(135deg, #0284c7, #22c55e);
+  color: #fff;
+  font-size: 15px;
+  font-weight: 800;
+  cursor: pointer;
+  box-shadow: 0 12px 30px rgba(34, 197, 94, 0.24);
+}
+
+button:hover {
+  filter: brightness(1.08);
+}
+
+button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.secondary-btn {
+  margin-top: 10px;
+  background: rgba(30, 41, 59, 0.95);
+  box-shadow: none;
+  border: 1px solid rgba(148, 163, 184, 0.25);
+}
+
+.status {
+  display: none;
+  margin-top: 16px;
+  padding: 12px;
+  border-radius: 12px;
+  font-size: 14px;
+  line-height: 1.45;
+  white-space: pre-wrap;
+}
+
+.status.ok {
+  display: block;
+  background: rgba(34, 197, 94, 0.16);
+  border: 1px solid rgba(34, 197, 94, 0.38);
+  color: #bbf7d0;
+}
+
+.status.err {
+  display: block;
+  background: rgba(239, 68, 68, 0.16);
+  border: 1px solid rgba(239, 68, 68, 0.38);
+  color: #fecaca;
+}
+
+.status.info {
+  display: block;
+  background: rgba(59, 130, 246, 0.16);
+  border: 1px solid rgba(59, 130, 246, 0.38);
+  color: #bfdbfe;
+}
+
+.small-note {
+  margin-top: 12px;
+  font-size: 12px;
+  line-height: 1.4;
+  color: #94a3b8;
+}
+
+.hidden {
+  display: none;
+}
+
+.required {
+  color: #fca5a5;
+}
+
+@media (max-width: 760px) {
+  body {
+    justify-content: center;
+    padding: 18px;
+  }
+
+  .card {
+    width: 100%;
+  }
+
+  .row {
+    grid-template-columns: 1fr;
+  }
+}
+</style>
+</head>
+
+<body>
+  <main class="card">
+    <div class="logo">Klamot<span>IPTV</span></div>
+    <div class="subtitle">
+      Dodaj playlistę do aplikacji TV. Wpisz kod z telewizora, MAC / ID urządzenia, dane listy oraz opcjonalny link EPG XMLTV.
+    </div>
+
+    <form id="playlistForm">
+      <div class="section-title">Urządzenie</div>
+
+      <label for="deviceCode">Kod urządzenia <span class="required">*</span></label>
+      <input id="deviceCode" type="text" placeholder="Np. 217598" autocomplete="off" required />
+
+      <label for="macAddress">MAC / ID urządzenia <span class="required">*</span></label>
+      <input id="macAddress" type="text" placeholder="Np. AA:BB:CC:DD:EE:FF albo ID z aplikacji" autocomplete="off" required />
+
+      <div class="section-title">Playlista</div>
+
+      <label for="playlistType">Typ playlisty</label>
+      <select id="playlistType">
+        <option value="m3u">M3U / M3U8</option>
+        <option value="xtream">Xtream Codes</option>
+      </select>
+
+      <label for="playlistName">Nazwa playlisty <span class="required">*</span></label>
+      <input id="playlistName" type="text" placeholder="Np. Moja lista" autocomplete="off" required />
+
+      <label id="urlLabel" for="urlHost">Adres listy M3U / M3U8 <span class="required">*</span></label>
+      <input id="urlHost" type="url" placeholder="Np. https://example.com/lista.m3u" autocomplete="off" required />
+
+      <div id="xtreamFields" class="hidden">
+        <label for="login">Login Xtream <span class="required">*</span></label>
+        <input id="login" type="text" placeholder="Login" autocomplete="off" />
+
+        <label for="password">Hasło Xtream <span class="required">*</span></label>
+        <input id="password" type="password" placeholder="Hasło" autocomplete="off" />
+      </div>
+
+      <label for="detailsPin">PIN szczegółów / kontroli</label>
+      <input id="detailsPin" type="text" inputmode="numeric" placeholder="Opcjonalnie, np. 1234" autocomplete="off" />
+
+      <div class="section-title">EPG</div>
+
+      <label for="epgUrl">Link EPG XMLTV</label>
+      <input id="epgUrl" type="url" placeholder="Np. https://example.com/epg.xml.gz" autocomplete="off" />
+
+      <label for="epgName">Nazwa EPG</label>
+      <input id="epgName" type="text" placeholder="Np. Moje EPG" autocomplete="off" />
+
+      <div class="row">
+        <div>
+          <label for="epgTimeShift">Przesunięcie czasu EPG</label>
+          <select id="epgTimeShift">
+            <option value="-6">-6 godzin</option>
+            <option value="-5">-5 godzin</option>
+            <option value="-4">-4 godziny</option>
+            <option value="-3">-3 godziny</option>
+            <option value="-2">-2 godziny</option>
+            <option value="-1">-1 godzina</option>
+            <option value="0" selected>0 godzin</option>
+            <option value="1">+1 godzina</option>
+            <option value="2">+2 godziny</option>
+            <option value="3">+3 godziny</option>
+            <option value="4">+4 godziny</option>
+            <option value="5">+5 godzin</option>
+            <option value="6">+6 godzin</option>
+          </select>
+        </div>
+
+        <div>
+          <label>Status EPG</label>
+          <label class="checkbox-row">
+            <input id="epgEnabled" type="checkbox" checked />
+            Włącz EPG
+          </label>
+        </div>
+      </div>
+
+      <button id="saveBtn" type="submit">Zapisz playlistę</button>
+      <button class="secondary-btn" id="clearBtn" type="button">Wyczyść formularz</button>
+
+      <div id="status" class="status"></div>
+
+      <div class="small-note">
+        Pola z gwiazdką są wymagane. EPG jest opcjonalne. Jeżeli nie masz linku EPG, zostaw pole puste.
+      </div>
+    </form>
+  </main>
+
+<script>
+const SUPABASE_URL = "https://ljfjuadidsemcanifphq.supabase.co";
+const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxqZmp1YWRpZHNlbWNhbmlmcGhxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzY5Mzg2ODYsImV4cCI6MjA5MjUxNDY4Nn0.JXW-oVW9bVQzzRhtD5SI5SwVFT15kgjw_DHh4AzmBC0";
+
+const form = document.getElementById("playlistForm");
+const statusBox = document.getElementById("status");
+const saveBtn = document.getElementById("saveBtn");
+const clearBtn = document.getElementById("clearBtn");
+
+const deviceCodeInput = document.getElementById("deviceCode");
+const macAddressInput = document.getElementById("macAddress");
+const playlistTypeInput = document.getElementById("playlistType");
+const playlistNameInput = document.getElementById("playlistName");
+const urlHostInput = document.getElementById("urlHost");
+const loginInput = document.getElementById("login");
+const passwordInput = document.getElementById("password");
+const detailsPinInput = document.getElementById("detailsPin");
+
+const epgUrlInput = document.getElementById("epgUrl");
+const epgNameInput = document.getElementById("epgName");
+const epgEnabledInput = document.getElementById("epgEnabled");
+const epgTimeShiftInput = document.getElementById("epgTimeShift");
+
+const xtreamFields = document.getElementById("xtreamFields");
+const urlLabel = document.getElementById("urlLabel");
+
+function showStatus(type, message) {
+  statusBox.className = "status " + type;
+  statusBox.textContent = message;
+}
+
+function clearStatus() {
+  statusBox.className = "status";
+  statusBox.textContent = "";
+}
+
+function normalizeText(value) {
+  const cleaned = String(value || "").trim();
+  return cleaned.length > 0 ? cleaned : null;
+}
+
+function normalizeDeviceCode(value) {
+  return String(value || "")
+    .trim()
+    .replace(/\s+/g, "")
+    .toUpperCase();
+}
+
+function normalizeMacOrDeviceId(value) {
+  return String(value || "")
+    .trim()
+    .replace(/\s+/g, "")
+    .toUpperCase();
+}
+
+function isSupabaseConfigured() {
+  return (
+    SUPABASE_URL &&
+    SUPABASE_ANON_KEY &&
+    !SUPABASE_URL.includes("TU_WKLEJ") &&
+    !SUPABASE_ANON_KEY.includes("TU_WKLEJ")
+  );
+}
+
+function getParam(names) {
+  const params = new URLSearchParams(window.location.search);
+
+  for (const name of names) {
+    const value = params.get(name);
+    if (value && value.trim().length > 0) {
+      return value.trim();
+    }
+  }
+
+  return "";
+}
+
+function fillDeviceDataFromUrl() {
+  const codeFromUrl = normalizeDeviceCode(
+    getParam(["code", "device_code", "deviceCode"])
+  );
+
+  const macFromUrl = normalizeMacOrDeviceId(
+    getParam(["mac", "mac_address", "macAddress", "device_id", "deviceId", "id"])
+  );
+
+  if (codeFromUrl) {
+    deviceCodeInput.value = codeFromUrl;
+  }
+
+  if (macFromUrl) {
+    macAddressInput.value = macFromUrl;
+  }
+}
+
+function applyTypeView() {
+  const type = playlistTypeInput.value;
+
+  if (type === "xtream") {
+    xtreamFields.classList.remove("hidden");
+    urlLabel.innerHTML = 'Host Xtream <span class="required">*</span>';
+    urlHostInput.placeholder = "Np. http://host:port";
+    loginInput.required = true;
+    passwordInput.required = true;
+  } else {
+    xtreamFields.classList.add("hidden");
+    urlLabel.innerHTML = 'Adres listy M3U / M3U8 <span class="required">*</span>';
+    urlHostInput.placeholder = "Np. https://example.com/lista.m3u";
+    loginInput.required = false;
+    passwordInput.required = false;
+    loginInput.value = "";
+    passwordInput.value = "";
+  }
+}
+
+function validateFormData(data) {
+  if (!data.device_code) {
+    return "Wpisz kod urządzenia z aplikacji TV.";
+  }
+
+  if (!data.mac_address) {
+    return "Wpisz MAC / ID urządzenia z aplikacji TV.";
+  }
+
+  if (!data.playlist_name) {
+    return "Wpisz nazwę playlisty.";
+  }
+
+  if (!data.url_host) {
+    return data.playlist_type === "xtream"
+      ? "Wpisz host Xtream."
+      : "Wpisz adres listy M3U.";
+  }
+
+  if (!/^https?:\/\//i.test(data.url_host)) {
+    return "Adres listy lub host musi zaczynać się od http:// albo https://.";
+  }
+
+  if (data.playlist_type === "xtream") {
+    if (!data.login) return "Wpisz login Xtream.";
+    if (!data.password) return "Wpisz hasło Xtream.";
+  }
+
+  if (data.epg_url && !/^https?:\/\//i.test(data.epg_url)) {
+    return "Link EPG musi zaczynać się od http:// albo https://.";
+  }
+
+  return null;
+}
+
+function buildPayload() {
+  const playlistType = playlistTypeInput.value;
+
+  return {
+    device_code: normalizeDeviceCode(deviceCodeInput.value),
+    mac_address: normalizeMacOrDeviceId(macAddressInput.value),
+
+    playlist_type: playlistType,
+    playlist_name: normalizeText(playlistNameInput.value),
+    url_host: normalizeText(urlHostInput.value),
+
+    login: playlistType === "xtream" ? normalizeText(loginInput.value) : null,
+    password: playlistType === "xtream" ? normalizeText(passwordInput.value) : null,
+    details_pin: normalizeText(detailsPinInput.value),
+
+    epg_url: normalizeText(epgUrlInput.value),
+    epg_name: normalizeText(epgNameInput.value),
+    epg_enabled: Boolean(epgEnabledInput.checked),
+    epg_time_shift: parseInt(epgTimeShiftInput.value || "0", 10)
+  };
+}
+
+async function saveToSupabase(payload) {
+  const endpoint =
+    SUPABASE_URL.replace(/\/$/, "") +
+    "/rest/v1/device_playlists?on_conflict=device_code";
+
+  const response = await fetch(endpoint, {
+    method: "POST",
+    headers: {
+      "apikey": SUPABASE_ANON_KEY,
+      "Authorization": "Bearer " + SUPABASE_ANON_KEY,
+      "Content-Type": "application/json",
+      "Prefer": "resolution=merge-duplicates,return=representation"
+    },
+    body: JSON.stringify(payload)
+  });
+
+  const text = await response.text();
+
+  if (!response.ok) {
+    let errorMessage = text;
+
+    try {
+      const parsed = JSON.parse(text);
+      errorMessage = parsed.message || parsed.error || parsed.details || text;
+    } catch (_) {}
+
+    throw new Error(errorMessage || "Błąd zapisu do Supabase.");
+  }
+
+  try {
+    return JSON.parse(text);
+  } catch (_) {
+    return text;
+  }
+}
+
+async function loadExistingByCode(deviceCode) {
+  if (!isSupabaseConfigured()) return;
+  if (!deviceCode) return;
+
+  const endpoint =
+    SUPABASE_URL.replace(/\/$/, "") +
+    "/rest/v1/device_playlists?device_code=eq." +
+    encodeURIComponent(deviceCode) +
+    "&select=*";
+
+  try {
+    const response = await fetch(endpoint, {
+      method: "GET",
+      headers: {
+        "apikey": SUPABASE_ANON_KEY,
+        "Authorization": "Bearer " + SUPABASE_ANON_KEY
+      }
+    });
+
+    if (!response.ok) return;
+
+    const rows = await response.json();
+
+    if (!Array.isArray(rows) || rows.length === 0) {
+      return;
+    }
+
+    const item = rows[0];
+
+    if (item.mac_address) macAddressInput.value = item.mac_address;
+    if (item.playlist_type) playlistTypeInput.value = item.playlist_type;
+    if (item.playlist_name) playlistNameInput.value = item.playlist_name;
+    if (item.url_host) urlHostInput.value = item.url_host;
+    if (item.login) loginInput.value = item.login;
+    if (item.password) passwordInput.value = item.password;
+    if (item.details_pin) detailsPinInput.value = item.details_pin;
+
+    if (item.epg_url) epgUrlInput.value = item.epg_url;
+    if (item.epg_name) epgNameInput.value = item.epg_name;
+
+    if (typeof item.epg_enabled === "boolean") {
+      epgEnabledInput.checked = item.epg_enabled;
+    }
+
+    if (item.epg_time_shift !== null && item.epg_time_shift !== undefined) {
+      epgTimeShiftInput.value = String(item.epg_time_shift);
+    }
+
+    applyTypeView();
+
+    showStatus(
+      "info",
+      "Znaleziono wcześniejsze dane dla tego kodu. Możesz je poprawić i zapisać ponownie."
+    );
+  } catch (_) {}
+}
+
+form.addEventListener("submit", async function(event) {
+  event.preventDefault();
+  clearStatus();
+
+  if (!isSupabaseConfigured()) {
+    showStatus(
+      "err",
+      "Brakuje Supabase URL albo Supabase anon key w pliku index.html."
+    );
+    return;
+  }
+
+  const payload = buildPayload();
+  const validationError = validateFormData(payload);
+
+  if (validationError) {
+    showStatus("err", validationError);
+    return;
+  }
+
+  saveBtn.disabled = true;
+  saveBtn.textContent = "Zapisywanie...";
+
+  try {
+    await saveToSupabase(payload);
+
+    showStatus(
+      "ok",
+      "Playlista została zapisana.\n\nKod urządzenia: " +
+        payload.device_code +
+        "\nMAC / ID: " +
+        payload.mac_address +
+        "\n\nTeraz w aplikacji TV wybierz sprawdzenie / dodanie playlisty."
+    );
+  } catch (error) {
+    showStatus(
+      "err",
+      "Nie udało się zapisać playlisty:\n" + error.message
+    );
+  } finally {
+    saveBtn.disabled = false;
+    saveBtn.textContent = "Zapisz playlistę";
+  }
+});
+
+clearBtn.addEventListener("click", function() {
+  const currentCode = deviceCodeInput.value;
+  const currentMac = macAddressInput.value;
+
+  form.reset();
+
+  deviceCodeInput.value = currentCode;
+  macAddressInput.value = currentMac;
+
+  epgEnabledInput.checked = true;
+  epgTimeShiftInput.value = "0";
+
+  applyTypeView();
+  clearStatus();
+});
+
+playlistTypeInput.addEventListener("change", applyTypeView);
+
+deviceCodeInput.addEventListener("blur", function() {
+  const code = normalizeDeviceCode(deviceCodeInput.value);
+  deviceCodeInput.value = code;
+  loadExistingByCode(code);
+});
+
+macAddressInput.addEventListener("blur", function() {
+  macAddressInput.value = normalizeMacOrDeviceId(macAddressInput.value);
+});
+
+fillDeviceDataFromUrl();
+applyTypeView();
+
+if (deviceCodeInput.value) {
+  loadExistingByCode(deviceCodeInput.value);
+}
+</script>
+</body>
+</html>
