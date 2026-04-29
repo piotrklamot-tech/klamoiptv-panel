@@ -3,14 +3,28 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Klamot IPTV</title>
-
+<title>Klamot IPTV Panel</title>
 <style>
+:root {
+  --bg-card: rgba(8, 17, 36, 0.88);
+  --bg-card-soft: rgba(10, 22, 45, 0.76);
+  --bg-input: rgba(8, 15, 31, 0.92);
+  --border: rgba(148, 163, 184, 0.2);
+  --border-strong: rgba(56, 189, 248, 0.38);
+  --text: #f8fafc;
+  --muted: #94a3b8;
+  --accent: #38bdf8;
+  --accent-2: #22c55e;
+  --warning: #f59e0b;
+  --danger: #ef4444;
+  --shadow: 0 20px 60px rgba(0, 0, 0, 0.45);
+  --radius-xl: 26px;
+  --radius-lg: 18px;
+  --radius-md: 14px;
+}
+
 * {
-  margin: 0;
-  padding: 0;
   box-sizing: border-box;
-  font-family: "Segoe UI", Arial, sans-serif;
 }
 
 html {
@@ -19,259 +33,741 @@ html {
 }
 
 body {
+  margin: 0;
   min-height: 100vh;
+  font-family: "Segoe UI", Arial, sans-serif;
+  color: var(--text);
   background: url("./tlo.png") center / cover no-repeat fixed;
-  display: flex;
-  align-items: flex-start;
-  justify-content: flex-start;
-  padding: 42px 0 42px 8%;
-  color: #fff;
 }
 
 body::before {
   content: "";
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.58);
+  background:
+    radial-gradient(circle at top left, rgba(14, 165, 233, 0.18), transparent 36%),
+    linear-gradient(180deg, rgba(2, 6, 23, 0.34), rgba(2, 6, 23, 0.74));
   z-index: -1;
 }
 
+.app-shell {
+  width: min(1180px, calc(100vw - 28px));
+  margin: 28px auto;
+  display: grid;
+  gap: 18px;
+}
+
 .card {
-  width: 450px;
-  max-width: calc(100vw - 32px);
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow);
+  backdrop-filter: blur(14px);
+}
+
+.hero {
   padding: 28px;
-  border-radius: 22px;
-  background: rgba(8, 16, 35, 0.86);
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.55);
-  border: 1px solid rgba(255, 255, 255, 0.14);
-  backdrop-filter: blur(12px);
+}
+
+.brand-row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 18px;
 }
 
 .logo {
   font-size: 30px;
   font-weight: 800;
-  letter-spacing: 0.5px;
-  margin-bottom: 4px;
+  letter-spacing: 0.3px;
 }
 
 .logo span {
-  color: #38bdf8;
+  color: var(--accent);
 }
 
 .subtitle {
-  font-size: 14px;
-  color: #cbd5e1;
-  margin-bottom: 22px;
-  line-height: 1.45;
-}
-
-.section-title {
-  margin-top: 18px;
-  margin-bottom: 10px;
-  font-size: 15px;
-  font-weight: 800;
-  color: #93c5fd;
-  border-top: 1px solid rgba(255, 255, 255, 0.13);
-  padding-top: 16px;
-}
-
-label {
-  display: block;
-  font-size: 13px;
-  color: #dbeafe;
-  margin-bottom: 6px;
-  margin-top: 12px;
-}
-
-input,
-select {
-  width: 100%;
-  height: 44px;
-  border: 1px solid rgba(148, 163, 184, 0.42);
-  border-radius: 12px;
-  background: rgba(15, 23, 42, 0.92);
-  color: #fff;
-  padding: 0 13px;
-  outline: none;
+  margin-top: 8px;
+  max-width: 720px;
+  color: #d6e4f7;
+  line-height: 1.55;
   font-size: 14px;
 }
 
-input:focus,
-select:focus {
-  border-color: #38bdf8;
-  box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.18);
-}
-
-input::placeholder {
-  color: #64748b;
-}
-
-.row {
+.device-grid {
+  margin-top: 22px;
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 12px;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 14px;
 }
 
-.checkbox-row {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin-top: 14px;
-  color: #e2e8f0;
-  font-size: 14px;
+.info-box {
+  min-height: 96px;
+  padding: 16px 18px;
+  border-radius: var(--radius-lg);
+  background: var(--bg-card-soft);
+  border: 1px solid rgba(255, 255, 255, 0.08);
 }
 
-.checkbox-row input {
-  width: 18px;
-  height: 18px;
-}
-
-button {
-  width: 100%;
-  height: 48px;
-  border: none;
-  border-radius: 14px;
-  margin-top: 18px;
-  background: linear-gradient(135deg, #0284c7, #22c55e);
-  color: #fff;
-  font-size: 15px;
-  font-weight: 800;
-  cursor: pointer;
-  box-shadow: 0 12px 30px rgba(34, 197, 94, 0.24);
-}
-
-button:hover {
-  filter: brightness(1.08);
-}
-
-button:disabled {
-  opacity: 0.6;
-  cursor: not-allowed;
-}
-
-.secondary-btn {
-  margin-top: 10px;
-  background: rgba(30, 41, 59, 0.95);
-  box-shadow: none;
-  border: 1px solid rgba(148, 163, 184, 0.25);
-}
-
-.status {
-  display: none;
-  margin-top: 16px;
-  padding: 12px;
-  border-radius: 12px;
-  font-size: 14px;
-  line-height: 1.45;
-  white-space: pre-wrap;
-}
-
-.status.ok {
+.info-label {
   display: block;
-  background: rgba(34, 197, 94, 0.16);
+  margin-bottom: 10px;
+  font-size: 12px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.info-value {
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 1.3;
+  word-break: break-word;
+}
+
+.info-value.muted {
+  color: #e2e8f0;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 40px;
+  padding: 0 16px;
+  border-radius: 999px;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.status-badge.active {
+  background: rgba(34, 197, 94, 0.14);
   border: 1px solid rgba(34, 197, 94, 0.38);
   color: #bbf7d0;
 }
 
-.status.err {
-  display: block;
-  background: rgba(239, 68, 68, 0.16);
-  border: 1px solid rgba(239, 68, 68, 0.38);
+.status-badge.inactive {
+  background: rgba(248, 113, 113, 0.14);
+  border: 1px solid rgba(248, 113, 113, 0.3);
   color: #fecaca;
 }
 
-.status.info {
+.device-form {
+  margin-top: 22px;
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(0, 1.4fr) auto;
+  gap: 14px;
+  align-items: end;
+}
+
+.field-group label,
+.modal-grid label {
   display: block;
-  background: rgba(59, 130, 246, 0.16);
-  border: 1px solid rgba(59, 130, 246, 0.38);
-  color: #bfdbfe;
-}
-
-.small-note {
-  margin-top: 12px;
-  font-size: 12px;
-  line-height: 1.4;
-  color: #94a3b8;
-}
-
-.hidden {
-  display: none;
+  margin-bottom: 7px;
+  font-size: 13px;
+  color: #dbeafe;
 }
 
 .required {
   color: #fca5a5;
 }
 
-@media (max-width: 760px) {
-  body {
-    justify-content: center;
+input,
+select {
+  width: 100%;
+  height: 46px;
+  border-radius: var(--radius-md);
+  border: 1px solid rgba(148, 163, 184, 0.34);
+  background: var(--bg-input);
+  color: var(--text);
+  padding: 0 14px;
+  outline: none;
+  font-size: 14px;
+}
+
+input:focus,
+select:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.16);
+}
+
+input::placeholder {
+  color: #6b7a90;
+}
+
+button {
+  border: none;
+  cursor: pointer;
+  transition: transform 0.18s ease, filter 0.18s ease, border-color 0.18s ease;
+}
+
+button:hover {
+  filter: brightness(1.05);
+}
+
+button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  filter: none;
+}
+
+.primary-btn,
+.secondary-btn,
+.ghost-btn,
+.danger-btn,
+.table-btn,
+.tab-btn {
+  min-height: 46px;
+  border-radius: 14px;
+  padding: 0 18px;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.primary-btn {
+  background: linear-gradient(135deg, #0284c7, #22c55e);
+  box-shadow: 0 14px 32px rgba(34, 197, 94, 0.22);
+}
+
+.secondary-btn {
+  background: rgba(15, 23, 42, 0.98);
+  border: 1px solid rgba(148, 163, 184, 0.2);
+}
+
+.ghost-btn,
+.tab-btn {
+  background: rgba(15, 23, 42, 0.82);
+  border: 1px solid rgba(148, 163, 184, 0.2);
+}
+
+.danger-btn {
+  background: rgba(127, 29, 29, 0.92);
+  border: 1px solid rgba(248, 113, 113, 0.26);
+}
+
+.toolbar {
+  padding: 18px 22px 22px;
+}
+
+.tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.tab-btn.active {
+  background: rgba(56, 189, 248, 0.14);
+  border-color: rgba(56, 189, 248, 0.4);
+  color: #d8f4ff;
+}
+
+.action-row {
+  margin-top: 18px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.status {
+  margin-top: 18px;
+  padding: 14px 16px;
+  border-radius: 16px;
+  font-size: 14px;
+  line-height: 1.55;
+  white-space: pre-wrap;
+}
+
+.status.hidden {
+  display: none;
+}
+
+.status.ok {
+  background: rgba(34, 197, 94, 0.14);
+  border: 1px solid rgba(34, 197, 94, 0.32);
+  color: #d1fae5;
+}
+
+.status.err {
+  background: rgba(239, 68, 68, 0.16);
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  color: #fecaca;
+}
+
+.status.info {
+  background: rgba(59, 130, 246, 0.15);
+  border: 1px solid rgba(59, 130, 246, 0.3);
+  color: #dbeafe;
+}
+
+.table-card {
+  padding: 22px;
+}
+
+.section-heading {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  align-items: flex-start;
+  margin-bottom: 16px;
+}
+
+.section-heading h2 {
+  margin: 0;
+  font-size: 22px;
+}
+
+.section-heading p {
+  margin: 7px 0 0;
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.table-wrap {
+  overflow-x: auto;
+  border-radius: 18px;
+  border: 1px solid rgba(148, 163, 184, 0.16);
+  background: rgba(3, 7, 18, 0.4);
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 960px;
+}
+
+thead th {
+  text-align: left;
+  padding: 16px 18px;
+  font-size: 12px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #bfd4ec;
+  background: rgba(15, 23, 42, 0.88);
+}
+
+tbody td {
+  padding: 18px;
+  vertical-align: top;
+  border-top: 1px solid rgba(148, 163, 184, 0.1);
+  font-size: 14px;
+}
+
+tbody tr:hover {
+  background: rgba(15, 23, 42, 0.48);
+}
+
+.playlist-name {
+  font-size: 16px;
+  font-weight: 700;
+  color: #f8fafc;
+}
+
+.row-sub {
+  margin-top: 6px;
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.45;
+}
+
+.type-badge,
+.pin-badge,
+.epg-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 28px;
+  padding: 0 12px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.type-badge {
+  background: rgba(56, 189, 248, 0.14);
+  color: #d8f4ff;
+  border: 1px solid rgba(56, 189, 248, 0.28);
+}
+
+.pin-badge {
+  background: rgba(245, 158, 11, 0.14);
+  color: #fde68a;
+  border: 1px solid rgba(245, 158, 11, 0.32);
+}
+
+.epg-badge {
+  background: rgba(34, 197, 94, 0.14);
+  color: #bbf7d0;
+  border: 1px solid rgba(34, 197, 94, 0.26);
+}
+
+.muted {
+  color: var(--muted);
+}
+
+.row-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.table-btn {
+  min-height: 38px;
+  padding: 0 14px;
+  font-size: 13px;
+}
+
+.table-btn.edit {
+  background: rgba(59, 130, 246, 0.14);
+  border: 1px solid rgba(59, 130, 246, 0.28);
+}
+
+.table-btn.delete {
+  background: rgba(239, 68, 68, 0.14);
+  border: 1px solid rgba(239, 68, 68, 0.28);
+}
+
+.empty-state {
+  padding: 28px;
+  border-radius: 18px;
+  background: rgba(15, 23, 42, 0.66);
+  border: 1px dashed rgba(148, 163, 184, 0.26);
+  color: #e2e8f0;
+  line-height: 1.55;
+}
+
+.empty-state.hidden {
+  display: none;
+}
+
+.privacy-note {
+  margin-top: 18px;
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.55;
+}
+
+.modal {
+  position: fixed;
+  inset: 0;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background: rgba(2, 6, 23, 0.72);
+  z-index: 1000;
+}
+
+.modal.open {
+  display: flex;
+}
+
+.modal-card {
+  width: min(760px, calc(100vw - 24px));
+  max-height: calc(100vh - 32px);
+  overflow-y: auto;
+  padding: 24px;
+  border-radius: 24px;
+  background: rgba(7, 15, 31, 0.96);
+  border: 1px solid rgba(148, 163, 184, 0.2);
+  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.55);
+}
+
+.modal-card.small {
+  width: min(440px, calc(100vw - 24px));
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+}
+
+.modal-title {
+  margin: 0;
+  font-size: 22px;
+}
+
+.modal-subtitle {
+  margin: 8px 0 0;
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.close-btn {
+  width: 42px;
+  height: 42px;
+  border-radius: 999px;
+  background: rgba(15, 23, 42, 0.98);
+  color: #dbeafe;
+  border: 1px solid rgba(148, 163, 184, 0.22);
+  font-size: 20px;
+}
+
+.modal-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  margin-top: 20px;
+}
+
+.modal-grid .full {
+  grid-column: 1 / -1;
+}
+
+.checkbox-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  margin-top: 8px;
+  padding: 14px 16px;
+  border-radius: 16px;
+  border: 1px solid rgba(148, 163, 184, 0.2);
+  background: rgba(15, 23, 42, 0.72);
+}
+
+.checkbox-card input {
+  width: 18px;
+  height: 18px;
+  margin-top: 2px;
+}
+
+.checkbox-title {
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.checkbox-note {
+  margin-top: 4px;
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.pin-fields.hidden,
+.xc-fields.hidden {
+  display: none;
+}
+
+.modal-status {
+  margin-top: 18px;
+}
+
+.modal-actions {
+  margin-top: 20px;
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.stack {
+  display: grid;
+  gap: 14px;
+}
+
+.pin-hint {
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.45;
+}
+
+@media (max-width: 920px) {
+  .device-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .device-form {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 700px) {
+  .app-shell {
+    width: calc(100vw - 18px);
+    margin: 14px auto;
+  }
+
+  .hero,
+  .toolbar,
+  .table-card {
     padding: 18px;
   }
 
-  .card {
-    width: 100%;
+  .device-grid,
+  .modal-grid {
+    grid-template-columns: 1fr;
   }
 
-  .row {
-    grid-template-columns: 1fr;
+  .modal-grid .full {
+    grid-column: auto;
+  }
+
+  .modal-actions {
+    flex-direction: column-reverse;
+  }
+
+  .primary-btn,
+  .secondary-btn,
+  .ghost-btn,
+  .danger-btn {
+    width: 100%;
   }
 }
 </style>
 </head>
-
 <body>
-  <main class="card">
-    <div class="logo">Klamot<span>IPTV</span></div>
-    <div class="subtitle">
-      Dodaj playlistę do aplikacji TV. Wpisz kod z telewizora, MAC / ID urządzenia, dane listy oraz opcjonalny link EPG XMLTV.
+<main class="app-shell">
+  <section class="hero card">
+    <div class="brand-row">
+      <div>
+        <div class="logo">Klamot<span>IPTV</span></div>
+        <p class="subtitle">
+          Polski panel zarządzania playlistą dla urządzenia TV. Zachowuje obsługę linku z kodem i ID urządzenia,
+          umożliwia zapis playlisty M3U albo Xtream/XC, edycję, usuwanie oraz ochronę PIN-em.
+        </p>
+      </div>
     </div>
 
-    <form id="playlistForm">
-      <div class="section-title">Urządzenie</div>
+    <div class="device-grid">
+      <article class="info-box">
+        <span class="info-label">Kod urządzenia</span>
+        <div id="deviceCodeBadge" class="info-value muted">Nie podano</div>
+      </article>
+      <article class="info-box">
+        <span class="info-label">ID urządzenia / MAC</span>
+        <div id="deviceIdBadge" class="info-value muted">Nie podano</div>
+      </article>
+      <article class="info-box">
+        <span class="info-label">Status</span>
+        <div id="deviceStatusBadge" class="status-badge inactive">Nieaktywne</div>
+      </article>
+      <article class="info-box">
+        <span class="info-label">Data wygaśnięcia</span>
+        <div id="expiryBadge" class="info-value muted">Brak daty wygaśnięcia</div>
+      </article>
+    </div>
 
-      <label for="deviceCode">Kod urządzenia <span class="required">*</span></label>
-      <input id="deviceCode" type="text" placeholder="Np. 217598" autocomplete="off" required />
-
-      <label for="macAddress">MAC / ID urządzenia <span class="required">*</span></label>
-      <input id="macAddress" type="text" placeholder="Np. AA:BB:CC:DD:EE:FF albo ID z aplikacji" autocomplete="off" required />
-
-      <div class="section-title">Playlista</div>
-
-      <label for="playlistType">Typ playlisty</label>
-      <select id="playlistType">
-        <option value="m3u">M3U / M3U8</option>
-        <option value="xtream">Xtream Codes</option>
-      </select>
-
-      <label for="playlistName">Nazwa playlisty <span class="required">*</span></label>
-      <input id="playlistName" type="text" placeholder="Np. Moja lista" autocomplete="off" required />
-
-      <label id="urlLabel" for="urlHost">Adres listy M3U / M3U8 <span class="required">*</span></label>
-      <input id="urlHost" type="url" placeholder="Np. https://example.com/lista.m3u" autocomplete="off" required />
-
-      <div id="xtreamFields" class="hidden">
-        <label for="login">Login Xtream <span class="required">*</span></label>
-        <input id="login" type="text" placeholder="Login" autocomplete="off" />
-
-        <label for="password">Hasło Xtream <span class="required">*</span></label>
-        <input id="password" type="password" placeholder="Hasło" autocomplete="off" />
+    <div class="device-form">
+      <div class="field-group">
+        <label for="deviceCodeInput">Kod urządzenia <span class="required">*</span></label>
+        <input id="deviceCodeInput" type="text" placeholder="Np. 217598" autocomplete="off" />
       </div>
+      <div class="field-group">
+        <label for="deviceIdInput">ID urządzenia / MAC <span class="required">*</span></label>
+        <input id="deviceIdInput" type="text" placeholder="Np. 72e22f0759bc13e9" autocomplete="off" />
+      </div>
+      <button id="loadDeviceBtn" class="ghost-btn" type="button">Wczytaj dane urządzenia</button>
+    </div>
+  </section>
 
-      <label for="detailsPin">PIN szczegółów / kontroli</label>
-      <input id="detailsPin" type="text" inputmode="numeric" placeholder="Opcjonalnie, np. 1234" autocomplete="off" />
+  <section class="toolbar card">
+    <div class="tabs">
+      <button class="tab-btn active" type="button">Playlisty</button>
+      <button id="activateBtn" class="tab-btn" type="button">Aktywuj</button>
+      <button id="logoutBtn" class="tab-btn" type="button">Wyloguj</button>
+    </div>
 
-      <div class="section-title">EPG</div>
+    <div class="action-row">
+      <button id="addM3uBtn" class="primary-btn" type="button">+ Dodaj playlistę</button>
+      <button id="addXtreamBtn" class="secondary-btn" type="button">+ Dodaj playlistę XC</button>
+    </div>
 
-      <label for="epgUrl">Link EPG XMLTV</label>
-      <input id="epgUrl" type="url" placeholder="Np. https://example.com/epg.xml.gz" autocomplete="off" />
+    <div id="statusBox" class="status hidden"></div>
+  </section>
 
-      <label for="epgName">Nazwa EPG</label>
-      <input id="epgName" type="text" placeholder="Np. Moje EPG" autocomplete="off" />
+  <section class="table-card card">
+    <div class="section-heading">
+      <div>
+        <h2>Zapisane playlisty</h2>
+        <p>
+          Dla bezpieczeństwa panel maskuje hasło, login i wrażliwe elementy adresów. Pełne dane do edycji są
+          pokazywane dopiero po poprawnej weryfikacji PIN-u, jeśli playlista jest chroniona.
+        </p>
+      </div>
+    </div>
 
-      <div class="row">
+    <div id="emptyState" class="empty-state hidden">Brak zapisanej playlisty dla tego urządzenia.</div>
+
+    <div class="table-wrap">
+      <table aria-label="Tabela playlist">
+        <thead>
+          <tr>
+            <th>Nazwa</th>
+            <th>Typ</th>
+            <th>Adres / Host</th>
+            <th>EPG</th>
+            <th>Ochrona</th>
+            <th>Akcje</th>
+          </tr>
+        </thead>
+        <tbody id="playlistTableBody"></tbody>
+      </table>
+    </div>
+
+    <p class="privacy-note">
+      Uwaga: to jest praktyczne zabezpieczenie po stronie interfejsu. Pełne bezpieczeństwo wymaga docelowo reguł
+      RLS lub RPC w Supabase, ponieważ frontend z anon key nie jest pełnym zabezpieczeniem danych.
+    </p>
+  </section>
+</main>
+
+<div id="playlistModal" class="modal" aria-hidden="true">
+  <div class="modal-card">
+    <div class="modal-header">
+      <div>
+        <h2 id="playlistModalTitle" class="modal-title">Dodaj playlistę</h2>
+        <p id="playlistModalSubtitle" class="modal-subtitle">
+          Wpisz dane playlisty dla aktualnego urządzenia. Zapis wykona się jako rekord powiązany z kodem urządzenia.
+        </p>
+      </div>
+      <button id="closePlaylistModalBtn" class="close-btn" type="button" aria-label="Zamknij">×</button>
+    </div>
+
+    <form id="playlistForm" class="stack">
+      <div class="modal-grid">
+        <div class="full">
+          <label for="playlistNameInput">Nazwa playlisty <span class="required">*</span></label>
+          <input id="playlistNameInput" type="text" placeholder="Np. Moja playlista" autocomplete="off" />
+        </div>
+
+        <div class="full">
+          <label id="hostFieldLabel" for="urlHostInput">Adres playlisty M3U / M3U8 <span class="required">*</span></label>
+          <input id="urlHostInput" type="text" placeholder="Np. https://example.com/lista.m3u" autocomplete="off" />
+        </div>
+
+        <div id="xcFields" class="xc-fields hidden full">
+          <div class="modal-grid">
+            <div>
+              <label for="loginInput">Login <span class="required">*</span></label>
+              <input id="loginInput" type="text" placeholder="Login Xtream" autocomplete="off" />
+            </div>
+            <div>
+              <label for="passwordInput">Hasło <span class="required">*</span></label>
+              <input id="passwordInput" type="password" placeholder="Hasło Xtream" autocomplete="off" />
+            </div>
+          </div>
+        </div>
+
+        <div class="full">
+          <label for="epgUrlInput">Link EPG XMLTV</label>
+          <input id="epgUrlInput" type="text" placeholder="Np. https://example.com/epg.xml.gz" autocomplete="off" />
+        </div>
+
         <div>
-          <label for="epgTimeShift">Przesunięcie czasu EPG</label>
-          <select id="epgTimeShift">
+          <label for="epgNameInput">Nazwa EPG</label>
+          <input id="epgNameInput" type="text" placeholder="Np. Moje EPG" autocomplete="off" />
+        </div>
+
+        <div>
+          <label for="epgTimeShiftInput">Przesunięcie czasu EPG</label>
+          <select id="epgTimeShiftInput">
             <option value="-6">-6 godzin</option>
             <option value="-5">-5 godzin</option>
             <option value="-4">-4 godziny</option>
@@ -288,51 +784,177 @@ button:disabled {
           </select>
         </div>
 
-        <div>
-          <label>Status EPG</label>
-          <label class="checkbox-row">
-            <input id="epgEnabled" type="checkbox" checked />
-            Włącz EPG
-          </label>
+        <div class="full checkbox-card">
+          <input id="protectToggle" type="checkbox" />
+          <div>
+            <div class="checkbox-title">Chroń tę playlistę kodem PIN</div>
+            <div class="checkbox-note">
+              Chronione playlisty nie będą widoczne ani możliwe do edycji bez podania PIN-u.
+            </div>
+          </div>
+        </div>
+
+        <div id="pinFields" class="pin-fields hidden full">
+          <div class="modal-grid">
+            <div>
+              <label for="pinInput">PIN <span class="required">*</span></label>
+              <input id="pinInput" type="password" inputmode="numeric" placeholder="PIN" autocomplete="off" />
+            </div>
+            <div>
+              <label for="pinConfirmInput">Powtórz PIN <span class="required">*</span></label>
+              <input id="pinConfirmInput" type="password" inputmode="numeric" placeholder="Powtórz PIN" autocomplete="off" />
+            </div>
+          </div>
+          <p id="pinHint" class="pin-hint"></p>
         </div>
       </div>
 
-      <button id="saveBtn" type="submit">Zapisz playlistę</button>
-      <button class="secondary-btn" id="clearBtn" type="button">Wyczyść formularz</button>
+      <div id="playlistModalStatus" class="status hidden modal-status"></div>
 
-      <div id="status" class="status"></div>
-
-      <div class="small-note">
-        Pola z gwiazdką są wymagane. EPG jest opcjonalne. Jeżeli nie masz linku EPG, zostaw pole puste.
+      <div class="modal-actions">
+        <button id="cancelPlaylistBtn" class="ghost-btn" type="button">Anuluj</button>
+        <button id="savePlaylistBtn" class="primary-btn" type="submit">Zapisz</button>
       </div>
     </form>
-  </main>
+  </div>
+</div>
+
+<div id="pinModal" class="modal" aria-hidden="true">
+  <div class="modal-card small">
+    <div class="modal-header">
+      <div>
+        <h2 class="modal-title">Podaj PIN</h2>
+        <p id="pinModalSubtitle" class="modal-subtitle">
+          Ta playlista jest chroniona. Wpisz poprawny PIN, aby kontynuować.
+        </p>
+      </div>
+      <button id="closePinModalBtn" class="close-btn" type="button" aria-label="Zamknij">×</button>
+    </div>
+
+    <div class="stack" style="margin-top: 18px;">
+      <div class="field-group">
+        <label for="pinVerifyInput">PIN</label>
+        <input id="pinVerifyInput" type="password" inputmode="numeric" placeholder="Wpisz PIN" autocomplete="off" />
+      </div>
+      <div id="pinVerifyStatus" class="status hidden"></div>
+      <div class="modal-actions">
+        <button id="cancelPinBtn" class="ghost-btn" type="button">Anuluj</button>
+        <button id="confirmPinBtn" class="primary-btn" type="button">Potwierdź</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="confirmModal" class="modal" aria-hidden="true">
+  <div class="modal-card small">
+    <div class="modal-header">
+      <div>
+        <h2 class="modal-title">Potwierdzenie</h2>
+        <p id="confirmModalMessage" class="modal-subtitle">
+          Czy na pewno chcesz usunąć tę playlistę?
+        </p>
+      </div>
+      <button id="closeConfirmModalBtn" class="close-btn" type="button" aria-label="Zamknij">×</button>
+    </div>
+
+    <div class="modal-actions" style="margin-top: 26px;">
+      <button id="cancelConfirmBtn" class="ghost-btn" type="button">Anuluj</button>
+      <button id="acceptConfirmBtn" class="danger-btn" type="button">Usuń</button>
+    </div>
+  </div>
+</div>
 
 <script>
 const SUPABASE_URL = "https://ljfjuadidsemcanifphq.supabase.co";
 const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxqZmp1YWRpZHNlbWNhbmlmcGhxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzY5Mzg2ODYsImV4cCI6MjA5MjUxNDY4Nn0.JXW-oVW9bVQzzRhtD5SI5SwVFT15kgjw_DHh4AzmBC0";
 
-const form = document.getElementById("playlistForm");
-const statusBox = document.getElementById("status");
-const saveBtn = document.getElementById("saveBtn");
-const clearBtn = document.getElementById("clearBtn");
+const TEST_SOURCE_MATCHERS = [
+  "https://iptv-org.github.io/iptv/index.m3u",
+  "https://raw.githubusercontent.com/free-tv/iptv/master/index.m3u"
+];
 
-const deviceCodeInput = document.getElementById("deviceCode");
-const macAddressInput = document.getElementById("macAddress");
-const playlistTypeInput = document.getElementById("playlistType");
-const playlistNameInput = document.getElementById("playlistName");
-const urlHostInput = document.getElementById("urlHost");
-const loginInput = document.getElementById("login");
-const passwordInput = document.getElementById("password");
-const detailsPinInput = document.getElementById("detailsPin");
+const state = {
+  rows: [],
+  modalMode: "m3u",
+  editingRow: null,
+  schema: {
+    protectedColumn: false,
+    updatedAtColumn: false
+  },
+  pinRequest: null,
+  confirmRequest: null
+};
 
-const epgUrlInput = document.getElementById("epgUrl");
-const epgNameInput = document.getElementById("epgName");
-const epgEnabledInput = document.getElementById("epgEnabled");
-const epgTimeShiftInput = document.getElementById("epgTimeShift");
+const statusBox = document.getElementById("statusBox");
+const deviceCodeInput = document.getElementById("deviceCodeInput");
+const deviceIdInput = document.getElementById("deviceIdInput");
+const loadDeviceBtn = document.getElementById("loadDeviceBtn");
+const activateBtn = document.getElementById("activateBtn");
+const logoutBtn = document.getElementById("logoutBtn");
+const addM3uBtn = document.getElementById("addM3uBtn");
+const addXtreamBtn = document.getElementById("addXtreamBtn");
 
-const xtreamFields = document.getElementById("xtreamFields");
-const urlLabel = document.getElementById("urlLabel");
+const deviceCodeBadge = document.getElementById("deviceCodeBadge");
+const deviceIdBadge = document.getElementById("deviceIdBadge");
+const deviceStatusBadge = document.getElementById("deviceStatusBadge");
+const expiryBadge = document.getElementById("expiryBadge");
+
+const tableBody = document.getElementById("playlistTableBody");
+const emptyState = document.getElementById("emptyState");
+
+const playlistModal = document.getElementById("playlistModal");
+const playlistModalTitle = document.getElementById("playlistModalTitle");
+const playlistModalSubtitle = document.getElementById("playlistModalSubtitle");
+const closePlaylistModalBtn = document.getElementById("closePlaylistModalBtn");
+const cancelPlaylistBtn = document.getElementById("cancelPlaylistBtn");
+const playlistForm = document.getElementById("playlistForm");
+const playlistModalStatus = document.getElementById("playlistModalStatus");
+const hostFieldLabel = document.getElementById("hostFieldLabel");
+const playlistNameInput = document.getElementById("playlistNameInput");
+const urlHostInput = document.getElementById("urlHostInput");
+const loginInput = document.getElementById("loginInput");
+const passwordInput = document.getElementById("passwordInput");
+const epgUrlInput = document.getElementById("epgUrlInput");
+const epgNameInput = document.getElementById("epgNameInput");
+const epgTimeShiftInput = document.getElementById("epgTimeShiftInput");
+const protectToggle = document.getElementById("protectToggle");
+const pinFields = document.getElementById("pinFields");
+const pinInput = document.getElementById("pinInput");
+const pinConfirmInput = document.getElementById("pinConfirmInput");
+const pinHint = document.getElementById("pinHint");
+const xcFields = document.getElementById("xcFields");
+const savePlaylistBtn = document.getElementById("savePlaylistBtn");
+
+const pinModal = document.getElementById("pinModal");
+const closePinModalBtn = document.getElementById("closePinModalBtn");
+const cancelPinBtn = document.getElementById("cancelPinBtn");
+const confirmPinBtn = document.getElementById("confirmPinBtn");
+const pinVerifyInput = document.getElementById("pinVerifyInput");
+const pinVerifyStatus = document.getElementById("pinVerifyStatus");
+const pinModalSubtitle = document.getElementById("pinModalSubtitle");
+
+const confirmModal = document.getElementById("confirmModal");
+const closeConfirmModalBtn = document.getElementById("closeConfirmModalBtn");
+const cancelConfirmBtn = document.getElementById("cancelConfirmBtn");
+const acceptConfirmBtn = document.getElementById("acceptConfirmBtn");
+const confirmModalMessage = document.getElementById("confirmModalMessage");
+
+function apiHeaders(includeJson = false) {
+  const headers = {
+    "apikey": SUPABASE_ANON_KEY,
+    "Authorization": "Bearer " + SUPABASE_ANON_KEY
+  };
+
+  if (includeJson) {
+    headers["Content-Type"] = "application/json";
+  }
+
+  return headers;
+}
+
+function buildEndpoint(query) {
+  return SUPABASE_URL.replace(/\/$/, "") + "/rest/v1/device_playlists" + (query || "");
+}
 
 function showStatus(type, message) {
   statusBox.className = "status " + type;
@@ -340,36 +962,40 @@ function showStatus(type, message) {
 }
 
 function clearStatus() {
-  statusBox.className = "status";
+  statusBox.className = "status hidden";
   statusBox.textContent = "";
 }
 
+function showModalStatus(element, type, message) {
+  element.className = "status " + type;
+  element.textContent = message;
+}
+
+function clearModalStatus(element) {
+  element.className = "status hidden";
+  element.textContent = "";
+}
+
 function normalizeText(value) {
-  const cleaned = String(value || "").trim();
-  return cleaned.length > 0 ? cleaned : null;
+  const text = String(value || "").trim();
+  return text.length > 0 ? text : null;
 }
 
 function normalizeDeviceCode(value) {
-  return String(value || "")
-    .trim()
-    .replace(/\s+/g, "")
-    .toUpperCase();
+  return String(value || "").trim().replace(/\s+/g, "").toUpperCase();
 }
 
-function normalizeMacOrDeviceId(value) {
-  return String(value || "")
-    .trim()
-    .replace(/\s+/g, "")
-    .toUpperCase();
+function normalizeDeviceId(value) {
+  return String(value || "").trim().replace(/\s+/g, "").toUpperCase();
 }
 
-function isSupabaseConfigured() {
-  return (
-    SUPABASE_URL &&
-    SUPABASE_ANON_KEY &&
-    !SUPABASE_URL.includes("TU_WKLEJ") &&
-    !SUPABASE_ANON_KEY.includes("TU_WKLEJ")
-  );
+function escapeHtml(value) {
+  return String(value || "")
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;");
 }
 
 function getParam(names) {
@@ -377,7 +1003,7 @@ function getParam(names) {
 
   for (const name of names) {
     const value = params.get(name);
-    if (value && value.trim().length > 0) {
+    if (value && value.trim()) {
       return value.trim();
     }
   }
@@ -386,272 +1012,733 @@ function getParam(names) {
 }
 
 function fillDeviceDataFromUrl() {
-  const codeFromUrl = normalizeDeviceCode(
-    getParam(["code", "device_code", "deviceCode"])
+  const code = normalizeDeviceCode(getParam(["code", "device_code", "deviceCode"]));
+  const deviceId = normalizeDeviceId(
+    getParam(["id", "device_id", "deviceId", "mac", "mac_address", "macAddress"])
   );
 
-  const macFromUrl = normalizeMacOrDeviceId(
-    getParam(["mac", "mac_address", "macAddress", "device_id", "deviceId", "id"])
-  );
-
-  if (codeFromUrl) {
-    deviceCodeInput.value = codeFromUrl;
+  if (code) {
+    deviceCodeInput.value = code;
   }
 
-  if (macFromUrl) {
-    macAddressInput.value = macFromUrl;
+  if (deviceId) {
+    deviceIdInput.value = deviceId;
   }
 }
 
-function applyTypeView() {
-  const type = playlistTypeInput.value;
+function getCurrentDeviceCode() {
+  return normalizeDeviceCode(deviceCodeInput.value);
+}
 
-  if (type === "xtream") {
-    xtreamFields.classList.remove("hidden");
-    urlLabel.innerHTML = 'Host Xtream <span class="required">*</span>';
+function getCurrentDeviceId() {
+  return normalizeDeviceId(deviceIdInput.value);
+}
+
+function rowIsProtected(row) {
+  return Boolean((row && row["protected"] === true) || normalizeText(row && row.details_pin));
+}
+
+function rowProtectionPin(row) {
+  return normalizeText(row && row.details_pin);
+}
+
+function maskPassword(password) {
+  return normalizeText(password) ? "********" : "—";
+}
+
+function maskLogin(login) {
+  const value = normalizeText(login);
+  if (!value) return "—";
+  const visible = value.slice(0, 2);
+  return visible + "***";
+}
+
+function getDomainFromUrl(rawValue) {
+  const value = normalizeText(rawValue);
+  if (!value) return null;
+
+  try {
+    return new URL(value).host || new URL(value).hostname || value;
+  } catch (_) {
+    return null;
+  }
+}
+
+function sanitizeHostForDisplay(rawValue) {
+  const value = normalizeText(rawValue);
+  if (!value) return "—";
+
+  try {
+    const parsed = new URL(value);
+    if (parsed.username || parsed.password) {
+      const path = parsed.pathname && parsed.pathname !== "/" ? parsed.pathname : "";
+      return parsed.origin + path + " (ukryto dane logowania)";
+    }
+    return value;
+  } catch (_) {
+    return value;
+  }
+}
+
+function resolveExpiryValue(row) {
+  if (!row || typeof row !== "object") return null;
+
+  const candidates = [
+    "expires_at",
+    "expires_on",
+    "expiry_date",
+    "expiration_date",
+    "valid_until",
+    "expires"
+  ];
+
+  for (const key of candidates) {
+    if (normalizeText(row[key])) {
+      return row[key];
+    }
+  }
+
+  return null;
+}
+
+function formatExpiry(value) {
+  if (!value) {
+    return "Brak daty wygaśnięcia";
+  }
+
+  const date = new Date(value);
+  if (Number.isNaN(date.getTime())) {
+    return "Brak daty wygaśnięcia";
+  }
+
+  return date.toLocaleString("pl-PL");
+}
+
+function isRecordActive(row) {
+  if (!row) return false;
+
+  const expiry = resolveExpiryValue(row);
+  if (!expiry) {
+    return true;
+  }
+
+  const expiryDate = new Date(expiry);
+  if (Number.isNaN(expiryDate.getTime())) {
+    return true;
+  }
+
+  return expiryDate.getTime() >= Date.now();
+}
+
+function updateSummary() {
+  const firstRow = state.rows[0] || null;
+  const currentCode = getCurrentDeviceCode();
+  const currentDeviceId = getCurrentDeviceId();
+  const displayDeviceId = currentDeviceId || normalizeText(firstRow && firstRow.mac_address);
+
+  deviceCodeBadge.textContent = currentCode || "Nie podano";
+  deviceIdBadge.textContent = displayDeviceId || "Nie podano";
+  expiryBadge.textContent = formatExpiry(resolveExpiryValue(firstRow));
+
+  const active = firstRow && isRecordActive(firstRow);
+  deviceStatusBadge.textContent = active ? "Aktywne" : "Nieaktywne";
+  deviceStatusBadge.className = "status-badge " + (active ? "active" : "inactive");
+}
+
+function renderTable() {
+  tableBody.innerHTML = "";
+
+  if (state.rows.length === 0) {
+    emptyState.classList.remove("hidden");
+    return;
+  }
+
+  emptyState.classList.add("hidden");
+
+  state.rows.forEach((row, index) => {
+    const tr = document.createElement("tr");
+    const hostDisplay = sanitizeHostForDisplay(row.url_host);
+    const epgDomain = getDomainFromUrl(row.epg_url);
+    const epgLabel = normalizeText(row.epg_url)
+      ? (epgDomain || "Dodane")
+      : "Brak";
+    const protectionLabel = rowIsProtected(row)
+      ? '<span class="pin-badge">Chroniona PIN-em</span>'
+      : '<span class="muted">Brak ochrony</span>';
+
+    tr.innerHTML = `
+      <td>
+        <div class="playlist-name">${escapeHtml(row.playlist_name || "Bez nazwy")}</div>
+        <div class="row-sub">Kod urządzenia: ${escapeHtml(row.device_code || "—")}</div>
+      </td>
+      <td>
+        <span class="type-badge">${row.playlist_type === "xtream" ? "Xtream / XC" : "M3U / M3U8"}</span>
+      </td>
+      <td>
+        <div>${escapeHtml(hostDisplay)}</div>
+        <div class="row-sub">Login: ${escapeHtml(maskLogin(row.login))}</div>
+        <div class="row-sub">Hasło: ${escapeHtml(maskPassword(row.password))}</div>
+      </td>
+      <td>
+        ${
+          normalizeText(row.epg_url)
+            ? `<span class="epg-badge">${escapeHtml(epgLabel)}</span>`
+            : '<span class="muted">Brak</span>'
+        }
+        <div class="row-sub">Nazwa EPG: ${escapeHtml(row.epg_name || "—")}</div>
+        <div class="row-sub">Przesunięcie: ${escapeHtml(String(row.epg_time_shift ?? 0))} h</div>
+      </td>
+      <td>${protectionLabel}</td>
+      <td>
+        <div class="row-actions">
+          <button class="table-btn edit" type="button" data-action="edit" data-index="${index}">Edytuj</button>
+          <button class="table-btn delete" type="button" data-action="delete" data-index="${index}">Usuń</button>
+        </div>
+      </td>
+    `;
+
+    tableBody.appendChild(tr);
+  });
+}
+
+function renderState() {
+  updateSummary();
+  renderTable();
+}
+
+async function columnExists(columnName) {
+  try {
+    const response = await fetch(
+      buildEndpoint(`?select=${encodeURIComponent(columnName)}&limit=1`),
+      {
+        method: "GET",
+        headers: apiHeaders(false)
+      }
+    );
+
+    return response.ok;
+  } catch (_) {
+    return false;
+  }
+}
+
+async function detectOptionalColumns() {
+  state.schema.protectedColumn = await columnExists("protected");
+  state.schema.updatedAtColumn = await columnExists("updated_at");
+}
+
+function sortRows(rows) {
+  return [...rows].sort((a, b) => {
+    const aTime = Date.parse(a.updated_at || "") || 0;
+    const bTime = Date.parse(b.updated_at || "") || 0;
+    return bTime - aTime;
+  });
+}
+
+async function loadRowsForCurrentDevice(options = {}) {
+  const currentCode = getCurrentDeviceCode();
+  const currentDeviceId = getCurrentDeviceId();
+
+  clearStatus();
+
+  if (!currentCode) {
+    state.rows = [];
+    renderState();
+    showStatus("info", "Wpisz kod urządzenia albo otwórz panel linkiem z parametrem ?code=.");
+    return;
+  }
+
+  if (options.showLoadingMessage) {
+    showStatus("info", "Wczytywanie zapisanych playlist...");
+  }
+
+  const endpoint = buildEndpoint(
+    `?device_code=eq.${encodeURIComponent(currentCode)}&select=*`
+  );
+
+  try {
+    const response = await fetch(endpoint, {
+      method: "GET",
+      headers: apiHeaders(false)
+    });
+
+    const text = await response.text();
+    const rows = text ? JSON.parse(text) : [];
+
+    if (!response.ok) {
+      throw new Error("Nie udało się pobrać danych playlisty z Supabase.");
+    }
+
+    state.rows = Array.isArray(rows) ? sortRows(rows) : [];
+
+    if (!currentDeviceId && state.rows[0] && normalizeText(state.rows[0].mac_address)) {
+      deviceIdInput.value = normalizeDeviceId(state.rows[0].mac_address);
+    }
+
+    renderState();
+
+    if (state.rows.length === 0) {
+      showStatus("info", "Brak zapisanej playlisty dla tego urządzenia.");
+    } else if (options.showLoadingMessage) {
+      showStatus("ok", "Załadowano zapisane dane playlisty dla tego urządzenia.");
+    }
+  } catch (error) {
+    state.rows = [];
+    renderState();
+    showStatus("err", "Nie udało się pobrać playlist z Supabase.\n" + error.message);
+  }
+}
+
+function openModal(modal) {
+  modal.classList.add("open");
+  modal.setAttribute("aria-hidden", "false");
+}
+
+function closeModal(modal) {
+  modal.classList.remove("open");
+  modal.setAttribute("aria-hidden", "true");
+}
+
+function applyPlaylistTypeMode(mode) {
+  state.modalMode = mode;
+
+  if (mode === "xtream") {
+    xcFields.classList.remove("hidden");
+    hostFieldLabel.innerHTML = 'Host Xtream <span class="required">*</span>';
     urlHostInput.placeholder = "Np. http://host:port";
-    loginInput.required = true;
-    passwordInput.required = true;
+    playlistModalTitle.textContent = state.editingRow ? "Edytuj playlistę XC" : "Dodaj playlistę XC";
+    playlistModalSubtitle.textContent = "Uzupełnij host, login i hasło dla źródła Xtream / XC.";
   } else {
-    xtreamFields.classList.add("hidden");
-    urlLabel.innerHTML = 'Adres listy M3U / M3U8 <span class="required">*</span>';
+    xcFields.classList.add("hidden");
+    hostFieldLabel.innerHTML = 'Adres playlisty M3U / M3U8 <span class="required">*</span>';
     urlHostInput.placeholder = "Np. https://example.com/lista.m3u";
-    loginInput.required = false;
-    passwordInput.required = false;
-    loginInput.value = "";
-    passwordInput.value = "";
+    playlistModalTitle.textContent = state.editingRow ? "Edytuj playlistę" : "Dodaj playlistę";
+    playlistModalSubtitle.textContent = "Uzupełnij adres listy M3U / M3U8 oraz opcjonalne dane EPG.";
   }
 }
 
-function validateFormData(data) {
-  if (!data.device_code) {
-    return "Wpisz kod urządzenia z aplikacji TV.";
+function togglePinFields() {
+  const enabled = protectToggle.checked;
+  pinFields.classList.toggle("hidden", !enabled);
+}
+
+function resetPlaylistForm() {
+  playlistForm.reset();
+  clearModalStatus(playlistModalStatus);
+  state.editingRow = null;
+  protectToggle.checked = false;
+  pinHint.textContent = "";
+  epgTimeShiftInput.value = "0";
+  applyPlaylistTypeMode("m3u");
+  togglePinFields();
+}
+
+function openPlaylistModal(mode, row) {
+  resetPlaylistForm();
+  state.editingRow = row || null;
+
+  if (row) {
+    playlistNameInput.value = row.playlist_name || "";
+    urlHostInput.value = row.url_host || "";
+    loginInput.value = row.login || "";
+    passwordInput.value = row.password || "";
+    epgUrlInput.value = row.epg_url || "";
+    epgNameInput.value = row.epg_name || "";
+    epgTimeShiftInput.value = String(row.epg_time_shift ?? 0);
+    protectToggle.checked = rowIsProtected(row);
+
+    if (protectToggle.checked) {
+      pinHint.textContent = "Pozostaw pola PIN puste, aby zachować obecny PIN ochrony.";
+    }
   }
 
-  if (!data.mac_address) {
-    return "Wpisz MAC / ID urządzenia z aplikacji TV.";
+  applyPlaylistTypeMode(mode);
+  togglePinFields();
+  openModal(playlistModal);
+  playlistNameInput.focus();
+}
+
+function closePlaylistModal() {
+  closeModal(playlistModal);
+  clearModalStatus(playlistModalStatus);
+}
+
+function openPinModal(row, onSuccess, contextLabel) {
+  state.pinRequest = { row, onSuccess };
+  pinVerifyInput.value = "";
+  clearModalStatus(pinVerifyStatus);
+  pinModalSubtitle.textContent = contextLabel || "Ta playlista jest chroniona. Wpisz poprawny PIN, aby kontynuować.";
+  openModal(pinModal);
+  pinVerifyInput.focus();
+}
+
+function closePinModal() {
+  state.pinRequest = null;
+  pinVerifyInput.value = "";
+  clearModalStatus(pinVerifyStatus);
+  closeModal(pinModal);
+}
+
+function openConfirmModal(message, onConfirm) {
+  state.confirmRequest = onConfirm;
+  confirmModalMessage.textContent = message;
+  openModal(confirmModal);
+}
+
+function closeConfirmModal() {
+  state.confirmRequest = null;
+  closeModal(confirmModal);
+}
+
+function validateDeviceFields() {
+  const deviceCode = getCurrentDeviceCode();
+  const deviceId = getCurrentDeviceId();
+
+  if (!deviceCode) {
+    return "Podaj kod urządzenia.";
   }
 
-  if (!data.playlist_name) {
-    return "Wpisz nazwę playlisty.";
+  if (!deviceId) {
+    return "Podaj ID urządzenia / MAC.";
   }
 
-  if (!data.url_host) {
-    return data.playlist_type === "xtream"
-      ? "Wpisz host Xtream."
-      : "Wpisz adres listy M3U.";
+  return null;
+}
+
+function validateModalPayload(mode) {
+  const deviceError = validateDeviceFields();
+  if (deviceError) return deviceError;
+
+  const playlistName = normalizeText(playlistNameInput.value);
+  if (!playlistName) {
+    return "Nazwa playlisty jest wymagana.";
   }
 
-  if (!/^https?:\/\//i.test(data.url_host)) {
-    return "Adres listy lub host musi zaczynać się od http:// albo https://.";
+  const host = normalizeText(urlHostInput.value);
+  if (!host) {
+    return mode === "xtream"
+      ? "Host Xtream jest wymagany."
+      : "Adres playlisty M3U / M3U8 jest wymagany.";
   }
 
-  if (data.playlist_type === "xtream") {
-    if (!data.login) return "Wpisz login Xtream.";
-    if (!data.password) return "Wpisz hasło Xtream.";
+  if (!/^https?:\/\//i.test(host)) {
+    return mode === "xtream"
+      ? "Host Xtream musi zaczynać się od http:// albo https://."
+      : "Adres playlisty musi zaczynać się od http:// albo https://.";
   }
 
-  if (data.epg_url && !/^https?:\/\//i.test(data.epg_url)) {
-    return "Link EPG musi zaczynać się od http:// albo https://.";
+  if (mode === "xtream") {
+    if (!normalizeText(loginInput.value)) {
+      return "Login Xtream jest wymagany.";
+    }
+    if (!normalizeText(passwordInput.value)) {
+      return "Hasło Xtream jest wymagane.";
+    }
+  }
+
+  const epgUrl = normalizeText(epgUrlInput.value);
+  if (epgUrl && !/^https?:\/\//i.test(epgUrl)) {
+    return "Link EPG XMLTV musi zaczynać się od http:// albo https://.";
+  }
+
+  if (protectToggle.checked) {
+    const newPin = normalizeText(pinInput.value);
+    const newPinConfirm = normalizeText(pinConfirmInput.value);
+    const existingPin = normalizeText(state.editingRow && state.editingRow.details_pin);
+
+    if (!existingPin || newPin || newPinConfirm) {
+      if (!newPin || !newPinConfirm) {
+        return "Jeśli włączasz ochronę PIN, pola PIN i Powtórz PIN są wymagane.";
+      }
+
+      if (newPin !== newPinConfirm) {
+        return "PIN nie zgadza się z potwierdzeniem";
+      }
+    }
   }
 
   return null;
 }
 
 function buildPayload() {
-  const playlistType = playlistTypeInput.value;
+  const mode = state.modalMode;
+  const epgUrl = normalizeText(epgUrlInput.value);
+  const pinEnabled = protectToggle.checked;
+  const existingPin = normalizeText(state.editingRow && state.editingRow.details_pin);
+  const typedPin = normalizeText(pinInput.value);
+  const pinToSave = pinEnabled
+    ? (typedPin || existingPin || null)
+    : null;
 
-  return {
-    device_code: normalizeDeviceCode(deviceCodeInput.value),
-    mac_address: normalizeMacOrDeviceId(macAddressInput.value),
-
-    playlist_type: playlistType,
+  const payload = {
+    device_code: getCurrentDeviceCode(),
+    mac_address: getCurrentDeviceId(),
+    playlist_type: mode === "xtream" ? "xtream" : "m3u",
     playlist_name: normalizeText(playlistNameInput.value),
     url_host: normalizeText(urlHostInput.value),
-
-    login: playlistType === "xtream" ? normalizeText(loginInput.value) : null,
-    password: playlistType === "xtream" ? normalizeText(passwordInput.value) : null,
-    details_pin: normalizeText(detailsPinInput.value),
-
-    epg_url: normalizeText(epgUrlInput.value),
+    login: mode === "xtream" ? normalizeText(loginInput.value) : null,
+    password: mode === "xtream" ? normalizeText(passwordInput.value) : null,
+    details_pin: pinToSave,
+    epg_url: epgUrl,
     epg_name: normalizeText(epgNameInput.value),
-    epg_enabled: Boolean(epgEnabledInput.checked),
-    epg_time_shift: parseInt(epgTimeShiftInput.value || "0", 10)
+    epg_enabled: Boolean(epgUrl),
+    epg_time_shift: Number.parseInt(epgTimeShiftInput.value || "0", 10) || 0
   };
+
+  if (state.schema.protectedColumn) {
+    payload["protected"] = pinEnabled;
+  }
+
+  if (state.schema.updatedAtColumn) {
+    payload.updated_at = new Date().toISOString();
+  }
+
+  return payload;
 }
 
-async function saveToSupabase(payload) {
-  const endpoint =
-    SUPABASE_URL.replace(/\/$/, "") +
-    "/rest/v1/device_playlists?on_conflict=device_code";
-
-  const response = await fetch(endpoint, {
-    method: "POST",
-    headers: {
-      "apikey": SUPABASE_ANON_KEY,
-      "Authorization": "Bearer " + SUPABASE_ANON_KEY,
-      "Content-Type": "application/json",
-      "Prefer": "resolution=merge-duplicates,return=representation"
-    },
-    body: JSON.stringify(payload)
-  });
+async function savePlaylist(payload) {
+  const response = await fetch(
+    buildEndpoint("?on_conflict=device_code"),
+    {
+      method: "POST",
+      headers: {
+        ...apiHeaders(true),
+        "Prefer": "resolution=merge-duplicates,return=representation"
+      },
+      body: JSON.stringify(payload)
+    }
+  );
 
   const text = await response.text();
+  let parsed = null;
+
+  try {
+    parsed = text ? JSON.parse(text) : null;
+  } catch (_) {
+    parsed = null;
+  }
 
   if (!response.ok) {
-    let errorMessage = text;
-
-    try {
-      const parsed = JSON.parse(text);
-      errorMessage = parsed.message || parsed.error || parsed.details || text;
-    } catch (_) {}
-
-    throw new Error(errorMessage || "Błąd zapisu do Supabase.");
+    const message =
+      (parsed && (parsed.message || parsed.details || parsed.error)) ||
+      text ||
+      "Nie udało się zapisać playlisty.";
+    throw new Error(message);
   }
 
-  try {
-    return JSON.parse(text);
-  } catch (_) {
-    return text;
+  return parsed;
+}
+
+async function deletePlaylistByDeviceCode(deviceCode) {
+  const response = await fetch(
+    buildEndpoint(`?device_code=eq.${encodeURIComponent(deviceCode)}`),
+    {
+      method: "DELETE",
+      headers: {
+        ...apiHeaders(false),
+        "Prefer": "return=minimal"
+      }
+    }
+  );
+
+  if (!response.ok) {
+    const text = await response.text();
+    throw new Error(text || "Nie udało się usunąć playlisty.");
   }
 }
 
-async function loadExistingByCode(deviceCode) {
-  if (!isSupabaseConfigured()) return;
-  if (!deviceCode) return;
+function handleProtectedAction(row, onSuccess, purpose) {
+  const storedPin = rowProtectionPin(row);
 
-  const endpoint =
-    SUPABASE_URL.replace(/\/$/, "") +
-    "/rest/v1/device_playlists?device_code=eq." +
-    encodeURIComponent(deviceCode) +
-    "&select=*";
+  if (!storedPin) {
+    onSuccess();
+    return;
+  }
 
-  try {
-    const response = await fetch(endpoint, {
-      method: "GET",
-      headers: {
-        "apikey": SUPABASE_ANON_KEY,
-        "Authorization": "Bearer " + SUPABASE_ANON_KEY
+  openPinModal(
+    row,
+    onSuccess,
+    purpose === "delete"
+      ? "Ta playlista jest chroniona. Podaj PIN przed usunięciem."
+      : "Ta playlista jest chroniona. Podaj PIN przed edycją."
+  );
+}
+
+function handleEditRow(row) {
+  const mode = row.playlist_type === "xtream" ? "xtream" : "m3u";
+
+  if (rowIsProtected(row)) {
+    handleProtectedAction(row, () => openPlaylistModal(mode, row), "edit");
+    return;
+  }
+
+  openPlaylistModal(mode, row);
+}
+
+function handleDeleteRow(row) {
+  const runDelete = () => {
+    openConfirmModal("Czy na pewno chcesz usunąć tę playlistę?", async () => {
+      closeConfirmModal();
+      showStatus("info", "Usuwanie playlisty...");
+
+      try {
+        await deletePlaylistByDeviceCode(row.device_code);
+        state.rows = [];
+        renderState();
+        showStatus("ok", "Playlista została usunięta.");
+      } catch (error) {
+        showStatus("err", "Nie udało się usunąć playlisty.\n" + error.message);
       }
     });
+  };
 
-    if (!response.ok) return;
+  if (rowIsProtected(row)) {
+    handleProtectedAction(row, runDelete, "delete");
+    return;
+  }
 
-    const rows = await response.json();
-
-    if (!Array.isArray(rows) || rows.length === 0) {
-      return;
-    }
-
-    const item = rows[0];
-
-    if (item.mac_address) macAddressInput.value = item.mac_address;
-    if (item.playlist_type) playlistTypeInput.value = item.playlist_type;
-    if (item.playlist_name) playlistNameInput.value = item.playlist_name;
-    if (item.url_host) urlHostInput.value = item.url_host;
-    if (item.login) loginInput.value = item.login;
-    if (item.password) passwordInput.value = item.password;
-    if (item.details_pin) detailsPinInput.value = item.details_pin;
-
-    if (item.epg_url) epgUrlInput.value = item.epg_url;
-    if (item.epg_name) epgNameInput.value = item.epg_name;
-
-    if (typeof item.epg_enabled === "boolean") {
-      epgEnabledInput.checked = item.epg_enabled;
-    }
-
-    if (item.epg_time_shift !== null && item.epg_time_shift !== undefined) {
-      epgTimeShiftInput.value = String(item.epg_time_shift);
-    }
-
-    applyTypeView();
-
-    showStatus(
-      "info",
-      "Znaleziono wcześniejsze dane dla tego kodu. Możesz je poprawić i zapisać ponownie."
-    );
-  } catch (_) {}
+  runDelete();
 }
 
-form.addEventListener("submit", async function(event) {
-  event.preventDefault();
-  clearStatus();
+tableBody.addEventListener("click", (event) => {
+  const button = event.target.closest("button[data-action]");
+  if (!button) return;
 
-  if (!isSupabaseConfigured()) {
-    showStatus(
-      "err",
-      "Brakuje Supabase URL albo Supabase anon key w pliku index.html."
-    );
+  const rowIndex = Number(button.getAttribute("data-index"));
+  const row = state.rows[rowIndex];
+  if (!row) return;
+
+  const action = button.getAttribute("data-action");
+  if (action === "edit") {
+    handleEditRow(row);
+  } else if (action === "delete") {
+    handleDeleteRow(row);
+  }
+});
+
+playlistForm.addEventListener("submit", async (event) => {
+  event.preventDefault();
+  clearModalStatus(playlistModalStatus);
+
+  const validationError = validateModalPayload(state.modalMode);
+  if (validationError) {
+    showModalStatus(playlistModalStatus, "err", validationError);
     return;
   }
 
   const payload = buildPayload();
-  const validationError = validateFormData(payload);
+  savePlaylistBtn.disabled = true;
+  savePlaylistBtn.textContent = "Zapisywanie...";
 
-  if (validationError) {
-    showStatus("err", validationError);
+  try {
+    await savePlaylist(payload);
+    closePlaylistModal();
+    showStatus("ok", "Playlista została zapisana.");
+    await loadRowsForCurrentDevice();
+  } catch (error) {
+    showModalStatus(
+      playlistModalStatus,
+      "err",
+      "Nie udało się zapisać playlisty.\n" + error.message
+    );
+  } finally {
+    savePlaylistBtn.disabled = false;
+    savePlaylistBtn.textContent = "Zapisz";
+  }
+});
+
+protectToggle.addEventListener("change", () => {
+  if (!protectToggle.checked) {
+    pinInput.value = "";
+    pinConfirmInput.value = "";
+  }
+  togglePinFields();
+});
+
+closePlaylistModalBtn.addEventListener("click", closePlaylistModal);
+cancelPlaylistBtn.addEventListener("click", closePlaylistModal);
+closePinModalBtn.addEventListener("click", closePinModal);
+cancelPinBtn.addEventListener("click", closePinModal);
+closeConfirmModalBtn.addEventListener("click", closeConfirmModal);
+cancelConfirmBtn.addEventListener("click", closeConfirmModal);
+
+confirmPinBtn.addEventListener("click", () => {
+  if (!state.pinRequest || !state.pinRequest.row) {
+    closePinModal();
     return;
   }
 
-  saveBtn.disabled = true;
-  saveBtn.textContent = "Zapisywanie...";
+  const enteredPin = normalizeText(pinVerifyInput.value);
+  const expectedPin = rowProtectionPin(state.pinRequest.row);
 
-  try {
-    await saveToSupabase(payload);
+  if (!enteredPin || enteredPin !== expectedPin) {
+    showModalStatus(pinVerifyStatus, "err", "Nieprawidłowy PIN");
+    return;
+  }
 
-    showStatus(
-      "ok",
-      "Playlista została zapisana.\n\nKod urządzenia: " +
-        payload.device_code +
-        "\nMAC / ID: " +
-        payload.mac_address +
-        "\n\nTeraz w aplikacji TV wybierz sprawdzenie / dodanie playlisty."
-    );
-  } catch (error) {
-    showStatus(
-      "err",
-      "Nie udało się zapisać playlisty:\n" + error.message
-    );
-  } finally {
-    saveBtn.disabled = false;
-    saveBtn.textContent = "Zapisz playlistę";
+  const callback = state.pinRequest.onSuccess;
+  closePinModal();
+  if (typeof callback === "function") {
+    callback();
   }
 });
 
-clearBtn.addEventListener("click", function() {
-  const currentCode = deviceCodeInput.value;
-  const currentMac = macAddressInput.value;
+acceptConfirmBtn.addEventListener("click", () => {
+  if (typeof state.confirmRequest === "function") {
+    state.confirmRequest();
+  } else {
+    closeConfirmModal();
+  }
+});
 
-  form.reset();
+addM3uBtn.addEventListener("click", () => openPlaylistModal("m3u"));
+addXtreamBtn.addEventListener("click", () => openPlaylistModal("xtream"));
+activateBtn.addEventListener("click", () => openPlaylistModal("m3u"));
 
-  deviceCodeInput.value = currentCode;
-  macAddressInput.value = currentMac;
-
-  epgEnabledInput.checked = true;
-  epgTimeShiftInput.value = "0";
-
-  applyTypeView();
+logoutBtn.addEventListener("click", () => {
+  deviceCodeInput.value = "";
+  deviceIdInput.value = "";
+  state.rows = [];
   clearStatus();
+  closePlaylistModal();
+  closePinModal();
+  closeConfirmModal();
+  renderState();
+  history.replaceState({}, "", window.location.pathname);
+  showStatus("info", "Dane sesji panelu zostały wyczyszczone.");
 });
 
-playlistTypeInput.addEventListener("change", applyTypeView);
-
-deviceCodeInput.addEventListener("blur", function() {
-  const code = normalizeDeviceCode(deviceCodeInput.value);
-  deviceCodeInput.value = code;
-  loadExistingByCode(code);
+loadDeviceBtn.addEventListener("click", async () => {
+  deviceCodeInput.value = getCurrentDeviceCode();
+  deviceIdInput.value = getCurrentDeviceId();
+  renderState();
+  await loadRowsForCurrentDevice({ showLoadingMessage: true });
 });
 
-macAddressInput.addEventListener("blur", function() {
-  macAddressInput.value = normalizeMacOrDeviceId(macAddressInput.value);
+deviceCodeInput.addEventListener("blur", () => {
+  deviceCodeInput.value = getCurrentDeviceCode();
+  renderState();
+});
+
+deviceIdInput.addEventListener("blur", () => {
+  deviceIdInput.value = getCurrentDeviceId();
+  renderState();
+});
+
+document.addEventListener("keydown", (event) => {
+  if (event.key !== "Escape") return;
+  closePlaylistModal();
+  closePinModal();
+  closeConfirmModal();
 });
 
 fillDeviceDataFromUrl();
-applyTypeView();
+renderState();
 
-if (deviceCodeInput.value) {
-  loadExistingByCode(deviceCodeInput.value);
-}
+(async () => {
+  await detectOptionalColumns();
+  await loadRowsForCurrentDevice({ showLoadingMessage: false });
+})();
 </script>
 </body>
 </html>
