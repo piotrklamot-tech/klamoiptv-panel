@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Klamot IPTV Panel</title>
+<title>Klamot Player</title>
 <style>
 :root {
   --bg-card: rgba(8, 17, 36, 0.88);
@@ -627,10 +627,10 @@ tbody tr:hover {
   <section class="hero card">
     <div class="brand-row">
       <div>
-        <div class="logo">Klamot<span>IPTV</span></div>
+        <div class="logo">Klamot <span>Player</span></div>
         <p class="subtitle">
-          Polski panel zarządzania playlistą dla urządzenia TV. Zachowuje obsługę linku z kodem i ID urządzenia,
-          umożliwia zapis playlisty M3U albo Xtream/XC, edycję, usuwanie oraz ochronę PIN-em.
+          Panel WWW Klamot Player do zarządzania danymi playlisty dla urządzenia TV. Zachowuje obsługę linku z kodem i ID urządzenia,
+          umożliwia zapis playlisty M3U albo Xtream/XC, edycję, usuwanie oraz ochronę danych playlisty kodem PIN.
         </p>
       </div>
     </div>
@@ -688,7 +688,7 @@ tbody tr:hover {
         <h2>Zapisane playlisty</h2>
         <p>
           Dla bezpieczeństwa panel maskuje hasło, login i wrażliwe elementy adresów. Pełne dane do edycji są
-          pokazywane dopiero po poprawnej weryfikacji PIN-u, jeśli playlista jest chroniona.
+          pokazywane dopiero po poprawnej weryfikacji PIN-u, jeśli dane playlisty są chronione w panelu WWW.
         </p>
       </div>
     </div>
@@ -787,9 +787,10 @@ tbody tr:hover {
         <div class="full checkbox-card">
           <input id="protectToggle" type="checkbox" />
           <div>
-            <div class="checkbox-title">Chroń tę playlistę kodem PIN</div>
+            <div class="checkbox-title">Chroń dane playlisty kodem PIN</div>
             <div class="checkbox-note">
-              Chronione playlisty nie będą widoczne ani możliwe do edycji bez podania PIN-u.
+              Chronione dane playlisty nie będą widoczne ani możliwe do edycji na tej stronie bez podania PIN-u.
+              PIN chroni tylko widok i edycję danych w panelu WWW.
             </div>
           </div>
         </div>
@@ -825,7 +826,7 @@ tbody tr:hover {
       <div>
         <h2 class="modal-title">Podaj PIN</h2>
         <p id="pinModalSubtitle" class="modal-subtitle">
-          Ta playlista jest chroniona. Wpisz poprawny PIN, aby kontynuować.
+          Podaj PIN, aby wyświetlić lub edytować szczegóły playlisty.
         </p>
       </div>
       <button id="closePinModalBtn" class="close-btn" type="button" aria-label="Zamknij">×</button>
@@ -1163,7 +1164,7 @@ function renderTable() {
       ? (epgDomain || "Dodane")
       : "Brak";
     const protectionLabel = rowIsProtected(row)
-      ? '<span class="pin-badge">Chroniona PIN-em</span>'
+      ? '<span class="pin-badge">Dane chronione PIN-em</span>'
       : '<span class="muted">Brak ochrony</span>';
 
     tr.innerHTML = `
@@ -1348,7 +1349,7 @@ function openPlaylistModal(mode, row) {
     protectToggle.checked = rowIsProtected(row);
 
     if (protectToggle.checked) {
-      pinHint.textContent = "Pozostaw pola PIN puste, aby zachować obecny PIN ochrony.";
+      pinHint.textContent = "PIN chroni tylko widok i edycję danych w panelu WWW. Pozostaw pola PIN puste, aby zachować obecny PIN ochrony.";
     }
   }
 
@@ -1367,7 +1368,7 @@ function openPinModal(row, onSuccess, contextLabel) {
   state.pinRequest = { row, onSuccess };
   pinVerifyInput.value = "";
   clearModalStatus(pinVerifyStatus);
-  pinModalSubtitle.textContent = contextLabel || "Ta playlista jest chroniona. Wpisz poprawny PIN, aby kontynuować.";
+  pinModalSubtitle.textContent = contextLabel || "Podaj PIN, aby wyświetlić lub edytować szczegóły playlisty.";
   openModal(pinModal);
   pinVerifyInput.focus();
 }
@@ -1448,7 +1449,7 @@ function validateModalPayload(mode) {
 
     if (!existingPin || newPin || newPinConfirm) {
       if (!newPin || !newPinConfirm) {
-        return "Jeśli włączasz ochronę PIN, pola PIN i Powtórz PIN są wymagane.";
+        return "Jeśli chcesz chronić dane playlisty PIN-em, pola PIN i Powtórz PIN są wymagane.";
       }
 
       if (newPin !== newPinConfirm) {
@@ -1559,8 +1560,8 @@ function handleProtectedAction(row, onSuccess, purpose) {
     row,
     onSuccess,
     purpose === "delete"
-      ? "Ta playlista jest chroniona. Podaj PIN przed usunięciem."
-      : "Ta playlista jest chroniona. Podaj PIN przed edycją."
+      ? "Podaj PIN, aby odblokować dane playlisty przed usunięciem na tej stronie."
+      : "Podaj PIN, aby wyświetlić lub edytować szczegóły playlisty."
   );
 }
 
