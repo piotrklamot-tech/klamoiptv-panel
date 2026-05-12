@@ -1044,14 +1044,13 @@ function rowProtectionPin(row) {
 }
 
 function maskPassword(password) {
-  return normalizeText(password) ? "********" : "â€”";
+  return normalizeText(password) ? "Ukryte" : "â€”";
 }
 
 function maskLogin(login) {
   const value = normalizeText(login);
   if (!value) return "â€”";
-  const visible = value.slice(0, 2);
-  return visible + "***";
+  return "Ukryte";
 }
 
 function getDomainFromUrl(rawValue) {
@@ -1158,10 +1157,7 @@ function renderTable() {
 
   state.rows.forEach((row, index) => {
     const tr = document.createElement("tr");
-        const epgDomain = getDomainFromUrl(row.epg_url);
-    const epgLabel = normalizeText(row.epg_url)
-      ? (epgDomain || "Dodane")
-      : "Brak";
+    const epgLabel = normalizeText(row.epg_url) ? "Ustawione" : "Brak";
     const protectionLabel = rowIsProtected(row)
       ? '<span class="pin-badge">Dane chronione PIN-em</span>'
       : '<span class="muted">Brak ochrony</span>';
@@ -1175,18 +1171,12 @@ function renderTable() {
         <span class="type-badge">${row.playlist_type === "xtream" ? "Xtream / XC" : "M3U / M3U8"}</span>
       </td>
       <td>
-        <div>Adres ukryty PIN-em</div>
+        <div>Szczegóły ukryte PIN-em</div>
         <div class="row-sub">Login: ${escapeHtml(maskLogin(row.login))}</div>
         <div class="row-sub">HasĹ‚o: ${escapeHtml(maskPassword(row.password))}</div>
       </td>
       <td>
-        ${
-          normalizeText(row.epg_url)
-            ? `<span class="epg-badge">${escapeHtml(epgLabel)}</span>`
-            : '<span class="muted">Brak</span>'
-        }
-        <div class="row-sub">Nazwa EPG: ${escapeHtml(row.epg_name || "â€”")}</div>
-        <div class="row-sub">PrzesuniÄ™cie: ${escapeHtml(String(row.epg_time_shift ?? 0))} h</div>
+        <span class="epg-badge">${escapeHtml(epgLabel)}</span>
       </td>
       <td>${protectionLabel}</td>
       <td>
