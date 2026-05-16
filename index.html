@@ -629,19 +629,19 @@ tbody tr:hover {
       <div>
         <div class="logo">Klamot <span>Player</span></div>
         <p class="subtitle">
-          Panel WWW Klamot Player do zarzÄ…dzania danymi playlisty dla urzÄ…dzenia TV. Zachowuje obsĹ‚ugÄ™ linku z kodem i ID urzÄ…dzenia,
-          umoĹĽliwia zapis playlisty M3U albo Xtream/XC, edycjÄ™, usuwanie oraz ochronÄ™ danych playlisty kodem PIN.
+          Panel WWW Klamot Player do zarządzania danymi playlisty dla urządzenia TV. Zachowuje obsługę linku z kodem i ID urządzenia,
+          umożliwia zapis playlisty M3U albo Xtream/XC, edycję, usuwanie oraz ochronę danych playlisty kodem PIN.
         </p>
       </div>
     </div>
 
     <div class="device-grid">
       <article class="info-box">
-        <span class="info-label">Kod urzÄ…dzenia</span>
+        <span class="info-label">Kod urządzenia</span>
         <div id="deviceCodeBadge" class="info-value muted">Nie podano</div>
       </article>
       <article class="info-box">
-        <span class="info-label">ID urzÄ…dzenia / MAC</span>
+        <span class="info-label">ID urządzenia / MAC</span>
         <div id="deviceIdBadge" class="info-value muted">Nie podano</div>
       </article>
       <article class="info-box">
@@ -649,21 +649,21 @@ tbody tr:hover {
         <div id="deviceStatusBadge" class="status-badge inactive">Nieaktywne</div>
       </article>
       <article class="info-box">
-        <span class="info-label">Data wygaĹ›niÄ™cia</span>
-        <div id="expiryBadge" class="info-value muted">Brak daty wygaĹ›niÄ™cia</div>
+        <span class="info-label">Data wygaśnięcia</span>
+        <div id="expiryBadge" class="info-value muted">Brak daty wygaśnięcia</div>
       </article>
     </div>
 
     <div class="device-form">
       <div class="field-group">
-        <label for="deviceCodeInput">Kod urzÄ…dzenia <span class="required">*</span></label>
+        <label for="deviceCodeInput">Kod urządzenia <span class="required">*</span></label>
         <input id="deviceCodeInput" type="text" placeholder="Np. 217598" autocomplete="off" />
       </div>
       <div class="field-group">
-        <label for="deviceIdInput">ID urzÄ…dzenia / MAC <span class="required">*</span></label>
+        <label for="deviceIdInput">ID urządzenia / MAC <span class="required">*</span></label>
         <input id="deviceIdInput" type="text" placeholder="Np. 72e22f0759bc13e9" autocomplete="off" />
       </div>
-      <button id="loadDeviceBtn" class="ghost-btn" type="button">Wczytaj dane urzÄ…dzenia</button>
+      <button id="loadDeviceBtn" class="ghost-btn" type="button">Wczytaj dane urządzenia</button>
     </div>
   </section>
 
@@ -675,8 +675,8 @@ tbody tr:hover {
     </div>
 
     <div class="action-row">
-      <button id="addM3uBtn" class="primary-btn" type="button">+ Dodaj playlistÄ™</button>
-      <button id="addXtreamBtn" class="secondary-btn" type="button">+ Dodaj playlistÄ™ XC</button>
+      <button id="addM3uBtn" class="primary-btn" type="button">+ Dodaj playlistę</button>
+      <button id="addXtreamBtn" class="secondary-btn" type="button">+ Dodaj playlistę XC</button>
     </div>
 
     <div id="statusBox" class="status hidden"></div>
@@ -687,13 +687,13 @@ tbody tr:hover {
       <div>
         <h2>Zapisane playlisty</h2>
         <p>
-          Dla bezpieczeĹ„stwa panel maskuje hasĹ‚o, login i wraĹĽliwe elementy adresĂłw. PeĹ‚ne dane do edycji sÄ…
-          pokazywane dopiero po poprawnej weryfikacji PIN-u, jeĹ›li dane playlisty sÄ… chronione w panelu WWW.
+          Dla bezpieczeństwa panel maskuje hasło, login i wrażliwe elementy adresów. Pełne dane do edycji są
+          pokazywane dopiero po poprawnej weryfikacji PIN-u, jeśli dane playlisty są chronione w panelu WWW.
         </p>
       </div>
     </div>
 
-    <div id="emptyState" class="empty-state hidden">Brak zapisanej playlisty dla tego urzÄ…dzenia.</div>
+    <div id="emptyState" class="empty-state hidden">Brak zapisanej playlisty dla tego urządzenia.</div>
 
     <div class="table-wrap">
       <table aria-label="Tabela playlist">
@@ -712,8 +712,8 @@ tbody tr:hover {
     </div>
 
     <p class="privacy-note">
-      Uwaga: to jest praktyczne zabezpieczenie po stronie interfejsu. PeĹ‚ne bezpieczeĹ„stwo wymaga docelowo reguĹ‚
-      RLS lub RPC w Supabase, poniewaĹĽ frontend z anon key nie jest peĹ‚nym zabezpieczeniem danych.
+      Uwaga: to jest praktyczne zabezpieczenie po stronie interfejsu. Pełne bezpieczeństwo wymaga docelowo reguł
+      RLS lub RPC w Supabase, ponieważ frontend z anon key nie jest pełnym zabezpieczeniem danych.
     </p>
   </section>
 </main>
@@ -722,12 +722,12 @@ tbody tr:hover {
   <div class="modal-card">
     <div class="modal-header">
       <div>
-        <h2 id="playlistModalTitle" class="modal-title">Dodaj playlistÄ™</h2>
+        <h2 id="playlistModalTitle" class="modal-title">Dodaj playlistę</h2>
         <p id="playlistModalSubtitle" class="modal-subtitle">
-          Wpisz dane playlisty dla aktualnego urzÄ…dzenia. Zapis wykona siÄ™ jako rekord powiÄ…zany z kodem urzÄ…dzenia.
+          Wpisz dane playlisty dla aktualnego urządzenia. Zapis wykona się jako rekord powiązany z kodem urządzenia.
         </p>
       </div>
-      <button id="closePlaylistModalBtn" class="close-btn" type="button" aria-label="Zamknij">Ă—</button>
+      <button id="closePlaylistModalBtn" class="close-btn" type="button" aria-label="Zamknij">×</button>
     </div>
 
     <form id="playlistForm" class="stack">
@@ -749,8 +749,8 @@ tbody tr:hover {
               <input id="loginInput" type="text" placeholder="Login Xtream" autocomplete="off" />
             </div>
             <div>
-              <label for="passwordInput">HasĹ‚o <span class="required">*</span></label>
-              <input id="passwordInput" type="password" placeholder="HasĹ‚o Xtream" autocomplete="off" />
+              <label for="passwordInput">Hasło <span class="required">*</span></label>
+              <input id="passwordInput" type="password" placeholder="Hasło Xtream" autocomplete="off" />
             </div>
           </div>
         </div>
@@ -766,7 +766,7 @@ tbody tr:hover {
         </div>
 
         <div>
-          <label for="epgTimeShiftInput">PrzesuniÄ™cie czasu EPG</label>
+          <label for="epgTimeShiftInput">Przesunięcie czasu EPG</label>
           <select id="epgTimeShiftInput">
             <option value="-6">-6 godzin</option>
             <option value="-5">-5 godzin</option>
@@ -787,10 +787,10 @@ tbody tr:hover {
         <div class="full checkbox-card">
           <input id="protectToggle" type="checkbox" />
           <div>
-            <div class="checkbox-title">ChroĹ„ dane playlisty kodem PIN</div>
+            <div class="checkbox-title">Chroń dane playlisty kodem PIN</div>
             <div class="checkbox-note">
-              Chronione dane playlisty nie bÄ™dÄ… widoczne ani moĹĽliwe do edycji na tej stronie bez podania PIN-u.
-              PIN chroni tylko widok i edycjÄ™ danych w panelu WWW.
+              Chronione dane playlisty nie będą widoczne ani możliwe do edycji na tej stronie bez podania PIN-u.
+              PIN chroni tylko widok i edycję danych w panelu WWW.
             </div>
           </div>
         </div>
@@ -802,8 +802,8 @@ tbody tr:hover {
               <input id="pinInput" type="password" inputmode="numeric" placeholder="PIN" autocomplete="off" />
             </div>
             <div>
-              <label for="pinConfirmInput">PowtĂłrz PIN <span class="required">*</span></label>
-              <input id="pinConfirmInput" type="password" inputmode="numeric" placeholder="PowtĂłrz PIN" autocomplete="off" />
+              <label for="pinConfirmInput">Powtórz PIN <span class="required">*</span></label>
+              <input id="pinConfirmInput" type="password" inputmode="numeric" placeholder="Powtórz PIN" autocomplete="off" />
             </div>
           </div>
           <p id="pinHint" class="pin-hint"></p>
@@ -826,10 +826,10 @@ tbody tr:hover {
       <div>
         <h2 class="modal-title">Podaj PIN</h2>
         <p id="pinModalSubtitle" class="modal-subtitle">
-          Podaj PIN, aby wyĹ›wietliÄ‡ lub edytowaÄ‡ szczegĂłĹ‚y playlisty.
+          Podaj PIN, aby wyświetlić lub edytować szczegóły playlisty.
         </p>
       </div>
-      <button id="closePinModalBtn" class="close-btn" type="button" aria-label="Zamknij">Ă—</button>
+      <button id="closePinModalBtn" class="close-btn" type="button" aria-label="Zamknij">×</button>
     </div>
 
     <div class="stack" style="margin-top: 18px;">
@@ -840,7 +840,7 @@ tbody tr:hover {
       <div id="pinVerifyStatus" class="status hidden"></div>
       <div class="modal-actions">
         <button id="cancelPinBtn" class="ghost-btn" type="button">Anuluj</button>
-        <button id="confirmPinBtn" class="primary-btn" type="button">PotwierdĹş</button>
+        <button id="confirmPinBtn" class="primary-btn" type="button">Potwierdź</button>
       </div>
     </div>
   </div>
@@ -852,15 +852,15 @@ tbody tr:hover {
       <div>
         <h2 class="modal-title">Potwierdzenie</h2>
         <p id="confirmModalMessage" class="modal-subtitle">
-          Czy na pewno chcesz usunÄ…Ä‡ tÄ™ playlistÄ™?
+          Czy na pewno chcesz usunąć tę playlistę?
         </p>
       </div>
-      <button id="closeConfirmModalBtn" class="close-btn" type="button" aria-label="Zamknij">Ă—</button>
+      <button id="closeConfirmModalBtn" class="close-btn" type="button" aria-label="Zamknij">×</button>
     </div>
 
     <div class="modal-actions" style="margin-top: 26px;">
       <button id="cancelConfirmBtn" class="ghost-btn" type="button">Anuluj</button>
-      <button id="acceptConfirmBtn" class="danger-btn" type="button">UsuĹ„</button>
+      <button id="acceptConfirmBtn" class="danger-btn" type="button">Usuń</button>
     </div>
   </div>
 </div>
@@ -1044,12 +1044,12 @@ function rowProtectionPin(row) {
 }
 
 function maskPassword(password) {
-  return normalizeText(password) ? "Ukryte" : "â€”";
+  return normalizeText(password) ? "Ukryte" : "—";
 }
 
 function maskLogin(login) {
   const value = normalizeText(login);
-  if (!value) return "â€”";
+  if (!value) return "—";
   return "Ukryte";
 }
 
@@ -1066,7 +1066,7 @@ function getDomainFromUrl(rawValue) {
 
 function sanitizeHostForDisplay(rawValue) {
   const value = normalizeText(rawValue);
-  if (!value) return "â€”";
+  if (!value) return "—";
 
   try {
     const parsed = new URL(value);
@@ -1103,12 +1103,12 @@ function resolveExpiryValue(row) {
 
 function formatExpiry(value) {
   if (!value) {
-    return "Brak daty wygaĹ›niÄ™cia";
+    return "Brak daty wygaśnięcia";
   }
 
   const date = new Date(value);
   if (Number.isNaN(date.getTime())) {
-    return "Brak daty wygaĹ›niÄ™cia";
+    return "Brak daty wygaśnięcia";
   }
 
   return date.toLocaleString("pl-PL");
@@ -1165,15 +1165,15 @@ function renderTable() {
     tr.innerHTML = `
       <td>
         <div class="playlist-name">${escapeHtml(row.playlist_name || "Bez nazwy")}</div>
-        <div class="row-sub">Kod urzÄ…dzenia: ${escapeHtml(row.device_code || "â€”")}</div>
+        <div class="row-sub">Kod urządzenia: ${escapeHtml(row.device_code || "—")}</div>
       </td>
       <td>
         <span class="type-badge">${row.playlist_type === "xtream" ? "Xtream / XC" : "M3U / M3U8"}</span>
       </td>
       <td>
-        <div>Szczegóły ukryte PIN-em</div>
+        <div>Szczeg�y ukryte PIN-em</div>
         <div class="row-sub">Login: ${escapeHtml(maskLogin(row.login))}</div>
-        <div class="row-sub">HasĹ‚o: ${escapeHtml(maskPassword(row.password))}</div>
+        <div class="row-sub">Hasło: ${escapeHtml(maskPassword(row.password))}</div>
       </td>
       <td>
         <span class="epg-badge">${escapeHtml(epgLabel)}</span>
@@ -1182,7 +1182,7 @@ function renderTable() {
       <td>
         <div class="row-actions">
           <button class="table-btn edit" type="button" data-action="edit" data-index="${index}">Edytuj</button>
-          <button class="table-btn delete" type="button" data-action="delete" data-index="${index}">UsuĹ„</button>
+          <button class="table-btn delete" type="button" data-action="delete" data-index="${index}">Usuń</button>
         </div>
       </td>
     `;
@@ -1234,7 +1234,7 @@ async function loadRowsForCurrentDevice(options = {}) {
   if (!currentCode) {
     state.rows = [];
     renderState();
-    showStatus("info", "Wpisz kod urzÄ…dzenia albo otwĂłrz panel linkiem z parametrem ?code=.");
+    showStatus("info", "Wpisz kod urządzenia albo otwórz panel linkiem z parametrem ?code=.");
     return;
   }
 
@@ -1256,7 +1256,7 @@ async function loadRowsForCurrentDevice(options = {}) {
     const rows = text ? JSON.parse(text) : [];
 
     if (!response.ok) {
-      throw new Error("Nie udaĹ‚o siÄ™ pobraÄ‡ danych playlisty z Supabase.");
+      throw new Error("Nie udało się pobrać danych playlisty z Supabase.");
     }
 
     state.rows = Array.isArray(rows) ? sortRows(rows) : [];
@@ -1268,14 +1268,14 @@ async function loadRowsForCurrentDevice(options = {}) {
     renderState();
 
     if (state.rows.length === 0) {
-      showStatus("info", "Brak zapisanej playlisty dla tego urzÄ…dzenia.");
+      showStatus("info", "Brak zapisanej playlisty dla tego urządzenia.");
     } else if (options.showLoadingMessage) {
-      showStatus("ok", "ZaĹ‚adowano zapisane dane playlisty dla tego urzÄ…dzenia.");
+      showStatus("ok", "Załadowano zapisane dane playlisty dla tego urządzenia.");
     }
   } catch (error) {
     state.rows = [];
     renderState();
-    showStatus("err", "Nie udaĹ‚o siÄ™ pobraÄ‡ playlist z Supabase.\n" + error.message);
+    showStatus("err", "Nie udało się pobrać playlist z Supabase.\n" + error.message);
   }
 }
 
@@ -1296,14 +1296,14 @@ function applyPlaylistTypeMode(mode) {
     xcFields.classList.remove("hidden");
     hostFieldLabel.innerHTML = 'Host Xtream <span class="required">*</span>';
     urlHostInput.placeholder = "Np. http://host:port";
-    playlistModalTitle.textContent = state.editingRow ? "Edytuj playlistÄ™ XC" : "Dodaj playlistÄ™ XC";
-    playlistModalSubtitle.textContent = "UzupeĹ‚nij host, login i hasĹ‚o dla ĹşrĂłdĹ‚a Xtream / XC.";
+    playlistModalTitle.textContent = state.editingRow ? "Edytuj playlistę XC" : "Dodaj playlistę XC";
+    playlistModalSubtitle.textContent = "Uzupełnij host, login i hasło dla źródła Xtream / XC.";
   } else {
     xcFields.classList.add("hidden");
     hostFieldLabel.innerHTML = 'Adres playlisty M3U / M3U8 <span class="required">*</span>';
     urlHostInput.placeholder = "Np. https://example.com/lista.m3u";
-    playlistModalTitle.textContent = state.editingRow ? "Edytuj playlistÄ™" : "Dodaj playlistÄ™";
-    playlistModalSubtitle.textContent = "UzupeĹ‚nij adres listy M3U / M3U8 oraz opcjonalne dane EPG.";
+    playlistModalTitle.textContent = state.editingRow ? "Edytuj playlistę" : "Dodaj playlistę";
+    playlistModalSubtitle.textContent = "Uzupełnij adres listy M3U / M3U8 oraz opcjonalne dane EPG.";
   }
 }
 
@@ -1338,7 +1338,7 @@ function openPlaylistModal(mode, row) {
     protectToggle.checked = rowIsProtected(row);
 
     if (protectToggle.checked) {
-      pinHint.textContent = "PIN chroni tylko widok i edycjÄ™ danych w panelu WWW. Pozostaw pola PIN puste, aby zachowaÄ‡ obecny PIN ochrony.";
+      pinHint.textContent = "PIN chroni tylko widok i edycję danych w panelu WWW. Pozostaw pola PIN puste, aby zachować obecny PIN ochrony.";
     }
   }
 
@@ -1357,7 +1357,7 @@ function openPinModal(row, onSuccess, contextLabel) {
   state.pinRequest = { row, onSuccess };
   pinVerifyInput.value = "";
   clearModalStatus(pinVerifyStatus);
-  pinModalSubtitle.textContent = contextLabel || "Podaj PIN, aby wyĹ›wietliÄ‡ lub edytowaÄ‡ szczegĂłĹ‚y playlisty.";
+  pinModalSubtitle.textContent = contextLabel || "Podaj PIN, aby wyświetlić lub edytować szczegóły playlisty.";
   openModal(pinModal);
   pinVerifyInput.focus();
 }
@@ -1385,11 +1385,11 @@ function validateDeviceFields() {
   const deviceId = getCurrentDeviceId();
 
   if (!deviceCode) {
-    return "Podaj kod urzÄ…dzenia.";
+    return "Podaj kod urządzenia.";
   }
 
   if (!deviceId) {
-    return "Podaj ID urzÄ…dzenia / MAC.";
+    return "Podaj ID urządzenia / MAC.";
   }
 
   return null;
@@ -1413,8 +1413,8 @@ function validateModalPayload(mode) {
 
   if (!/^https?:\/\//i.test(host)) {
     return mode === "xtream"
-      ? "Host Xtream musi zaczynaÄ‡ siÄ™ od http:// albo https://."
-      : "Adres playlisty musi zaczynaÄ‡ siÄ™ od http:// albo https://.";
+      ? "Host Xtream musi zaczynać się od http:// albo https://."
+      : "Adres playlisty musi zaczynać się od http:// albo https://.";
   }
 
   if (mode === "xtream") {
@@ -1422,13 +1422,13 @@ function validateModalPayload(mode) {
       return "Login Xtream jest wymagany.";
     }
     if (!normalizeText(passwordInput.value)) {
-      return "HasĹ‚o Xtream jest wymagane.";
+      return "Hasło Xtream jest wymagane.";
     }
   }
 
   const epgUrl = normalizeText(epgUrlInput.value);
   if (epgUrl && !/^https?:\/\//i.test(epgUrl)) {
-    return "Link EPG XMLTV musi zaczynaÄ‡ siÄ™ od http:// albo https://.";
+    return "Link EPG XMLTV musi zaczynać się od http:// albo https://.";
   }
 
   if (protectToggle.checked) {
@@ -1438,11 +1438,11 @@ function validateModalPayload(mode) {
 
     if (!existingPin || newPin || newPinConfirm) {
       if (!newPin || !newPinConfirm) {
-        return "JeĹ›li chcesz chroniÄ‡ dane playlisty PIN-em, pola PIN i PowtĂłrz PIN sÄ… wymagane.";
+        return "Jeśli chcesz chronić dane playlisty PIN-em, pola PIN i Powtórz PIN są wymagane.";
       }
 
       if (newPin !== newPinConfirm) {
-        return "PIN nie zgadza siÄ™ z potwierdzeniem";
+        return "PIN nie zgadza się z potwierdzeniem";
       }
     }
   }
@@ -1512,7 +1512,7 @@ async function savePlaylist(payload) {
     const message =
       (parsed && (parsed.message || parsed.details || parsed.error)) ||
       text ||
-      "Nie udaĹ‚o siÄ™ zapisaÄ‡ playlisty.";
+      "Nie udało się zapisać playlisty.";
     throw new Error(message);
   }
 
@@ -1533,7 +1533,7 @@ async function deletePlaylistByDeviceCode(deviceCode) {
 
   if (!response.ok) {
     const text = await response.text();
-    throw new Error(text || "Nie udaĹ‚o siÄ™ usunÄ…Ä‡ playlisty.");
+    throw new Error(text || "Nie udało się usunąć playlisty.");
   }
 }
 
@@ -1549,8 +1549,8 @@ function handleProtectedAction(row, onSuccess, purpose) {
     row,
     onSuccess,
     purpose === "delete"
-      ? "Podaj PIN, aby odblokowaÄ‡ dane playlisty przed usuniÄ™ciem na tej stronie."
-      : "Podaj PIN, aby wyĹ›wietliÄ‡ lub edytowaÄ‡ szczegĂłĹ‚y playlisty."
+      ? "Podaj PIN, aby odblokować dane playlisty przed usunięciem na tej stronie."
+      : "Podaj PIN, aby wyświetlić lub edytować szczegóły playlisty."
   );
 }
 
@@ -1567,7 +1567,7 @@ function handleEditRow(row) {
 
 function handleDeleteRow(row) {
   const runDelete = () => {
-    openConfirmModal("Czy na pewno chcesz usunÄ…Ä‡ tÄ™ playlistÄ™?", async () => {
+    openConfirmModal("Czy na pewno chcesz usunąć tę playlistę?", async () => {
       closeConfirmModal();
       showStatus("info", "Usuwanie playlisty...");
 
@@ -1575,9 +1575,9 @@ function handleDeleteRow(row) {
         await deletePlaylistByDeviceCode(row.device_code);
         state.rows = [];
         renderState();
-        showStatus("ok", "Playlista zostaĹ‚a usuniÄ™ta.");
+        showStatus("ok", "Playlista została usunięta.");
       } catch (error) {
-        showStatus("err", "Nie udaĹ‚o siÄ™ usunÄ…Ä‡ playlisty.\n" + error.message);
+        showStatus("err", "Nie udało się usunąć playlisty.\n" + error.message);
       }
     });
   };
@@ -1623,13 +1623,13 @@ playlistForm.addEventListener("submit", async (event) => {
   try {
     await savePlaylist(payload);
     closePlaylistModal();
-    showStatus("ok", "Playlista zostaĹ‚a zapisana.");
+    showStatus("ok", "Playlista została zapisana.");
     await loadRowsForCurrentDevice();
   } catch (error) {
     showModalStatus(
       playlistModalStatus,
       "err",
-      "Nie udaĹ‚o siÄ™ zapisaÄ‡ playlisty.\n" + error.message
+      "Nie udało się zapisać playlisty.\n" + error.message
     );
   } finally {
     savePlaylistBtn.disabled = false;
@@ -1662,7 +1662,7 @@ confirmPinBtn.addEventListener("click", () => {
   const expectedPin = rowProtectionPin(state.pinRequest.row);
 
   if (!enteredPin || enteredPin !== expectedPin) {
-    showModalStatus(pinVerifyStatus, "err", "NieprawidĹ‚owy PIN");
+    showModalStatus(pinVerifyStatus, "err", "Nieprawidłowy PIN");
     return;
   }
 
@@ -1695,7 +1695,7 @@ logoutBtn.addEventListener("click", () => {
   closeConfirmModal();
   renderState();
   history.replaceState({}, "", window.location.pathname);
-  showStatus("info", "Dane sesji panelu zostaĹ‚y wyczyszczone.");
+  showStatus("info", "Dane sesji panelu zostały wyczyszczone.");
 });
 
 loadDeviceBtn.addEventListener("click", async () => {
@@ -1732,5 +1732,6 @@ renderState();
 </script>
 </body>
 </html>
+
 
 
